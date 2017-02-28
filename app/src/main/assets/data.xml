@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<catalog>
+    <Category name="History">
+        <Question>
+            <text>When did the Ottoman's conquer Constantinople?</text>
+            <answer>1453</answer>
+            <choice>1199</choice>
+            <choice>1340</choice>
+            <choice>1563</choice>
+        </Question>
+        <Question>
+            <text>Who is the Nazi general with the nickname 'The Desert Fox'?</text>
+            <answer>Erwin Rommel</answer>
+            <choice>Hubert Lanz</choice>
+            <choice>Ludwig Beck</choice>
+            <choice>Alfred Keller</choice>
+        </Question>
+    </Category>
+</catalog>

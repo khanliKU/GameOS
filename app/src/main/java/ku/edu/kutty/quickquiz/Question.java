@@ -55,6 +55,17 @@ public class Question
         }
     }
 
+    @Override
+    public String toString()
+    {
+        String result = questionText + "\n";
+        for (int i=0; i < choices.length; i++)
+        {
+            result += choices[i] + "\n";
+        }
+        return result;
+    }
+
     // Implementing Fisher–Yates shuffle
     static <T> void shuffleArray(T[] ar)
     {
