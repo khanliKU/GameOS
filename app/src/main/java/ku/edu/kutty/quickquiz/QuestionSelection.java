@@ -21,16 +21,19 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class QuestionSelection extends AppCompatActivity
 {
+
+    Category[] categories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_selection);
 
-        Question test;
-
         try
         {
+            ArrayList<Question> questions;
+            ArrayList<Category> categories;
             InputStream is = getAssets().open("data.xml");
             /*
             int streamLength = is.available();
@@ -47,7 +50,7 @@ public class QuestionSelection extends AppCompatActivity
             element.normalize();
 
             NodeList categoryList = doc.getElementsByTagName("Category");
-
+            categories = new ArrayList<Category>();
             for (int i = 0;i < categoryList.getLength(); i++)
             {
                 Node categoryNode = categoryList.item(i);
@@ -55,6 +58,7 @@ public class QuestionSelection extends AppCompatActivity
                 {
                     Element categoryElement = (Element) categoryNode;
                     NodeList questionList = categoryElement.getElementsByTagName("Question");
+                    questions = new ArrayList<Question>();
                     for (int j = 0; j < questionList.getLength(); j++)
                     {
                         Node questionNode = questionList.item(j);
@@ -62,12 +66,17 @@ public class QuestionSelection extends AppCompatActivity
                         {
                             Element questionElement = (Element) questionNode;
 //                            Log.d("Element Value:", getQuestionData("text",questionElement));
-                            test = createQuestion(questionElement);
-                            Log.d("test: ", test.toString());
+//                            test = createQuestion(questionElement);
+//                            Log.d("test: ", test.toString());
+                            questions.add(createQuestion(questionElement));
                         }
                     }
+//                    Category dummy = new Category(getSingleValue("name",categoryElement), questions.toArray(new Question[questions.size()]));
+//                    Log.d("category: ",dummy.toString());
+                    categories.add(new Category(getSingleValue("name",categoryElement), questions.toArray(new Question[questions.size()])));
                 }
             }
+            this.categories =  categories.toArray(new Category[categories.size()]);
         }
         catch (IOException e)
         {
@@ -83,6 +92,11 @@ public class QuestionSelection extends AppCompatActivity
         {
             e.printStackTrace();
             Log.d("Error: ", e.toString());
+        }
+
+        for (int i = 0; i < categories.length; i++)
+        {
+            Log.d("category ", categories[i].toString());
         }
 
         /*
@@ -123,4 +137,10 @@ public class QuestionSelection extends AppCompatActivity
         }
         return result;
     }
+/*
+    public static <T> T[] arraylistToArray(ArrayList<T> arrayList)
+    {
+        T[] result = new T[arrayList.size()];
+    }
+*/
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <catalog>
-    <Category name="History">
+    <Category>
+        <name>History</name>
         <Question>
             <text>When did the Ottoman's conquer Constantinople?</text>
             <answer>1453</answer>

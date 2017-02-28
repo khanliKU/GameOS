@@ -25,4 +25,15 @@ public class Category
     {
         return  questions;
     }
+
+    @Override
+    public String toString()
+    {
+        String result = name + "\n";
+        for (int i = 0; i < questions.length; i++)
+        {
+            result += questions[i].toString();
+        }
+        return result;
+    }
 }
