@@ -8,6 +8,7 @@ public class User
 {
     private static User instance = null;
     private String nickname;
+    private Category[] progress;
     private int score;
 
     private User(String nickname)

@@ -1,5 +1,6 @@
 package ku.edu.kutty.quickquiz;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -130,7 +131,11 @@ public class QuestionSelection extends AppCompatActivity
         {
             public void onClick(View view)
             {
-                Log.d("test: ",categoryIndex + " " + questionIndex);
+//                Log.d("test: ",categoryIndex + " " + questionIndex);
+                Intent answerIntent = new Intent(QuestionSelection.this, AnsweringActivity.class);
+                answerIntent.putExtra("category",categoryIndex);
+                answerIntent.putExtra("question",questionIndex);
+                startActivity(answerIntent);
             }
         };
     }
