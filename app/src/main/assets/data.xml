@@ -16,5 +16,81 @@
             <choice>Ludwig Beck</choice>
             <choice>Alfred Keller</choice>
         </Question>
+        <Question>
+            <text>The German physicist Hans Geiger is best remembered as the co-inventor of a device for measuring what?</text>
+            <answer>Radiation</answer>
+            <choice>Pressure</choice>
+            <choice>Rainfall</choice>
+            <choice>Temperature</choice>
+        </Question>
+        <Question>
+            <text>Who is credited with inventing the instant camera in 1947?</text>
+            <answer>Edwin Land</answer>
+            <choice>George Eastman</choice>
+            <choice>Robert Kodak</choice>
+            <choice>James Drury</choice>
+        </Question>
+    </Category>
+    <Category>
+        <name>Art</name>
+        <Question>
+            <text>What is the location of London's National Gallery?</text>
+            <answer>Trafalgar Square</answer>
+            <choice>Grosvenor Square</choice>
+            <choice>Leicester Square</choice>
+            <choice>Sloane Square</choice>
+        </Question>
+        <Question>
+            <text>What nationality was Edvard Munch, who produced the famous painting The Scream in 1893?</text>
+            <answer>Norwegian</answer>
+            <choice>Swedish</choice>
+            <choice>German</choice>
+            <choice>Belgian</choice>
+        </Question>
+        <Question>
+            <text>Pablo Picasso was born in 1881 in which Spanish city?</text>
+            <answer>Malaga</answer>
+            <choice>Madrid</choice>
+            <choice>Marbella</choice>
+            <choice>Murcia</choice>
+        </Question>
+        <Question>
+            <text>What name is given to the Japanese art of paper folding?</text>
+            <answer>Origami</answer>
+            <choice>Bonsai</choice>
+            <choice>Haiku</choice>
+            <choice>Ikebana</choice>
+        </Question>
+    </Category>
+    <Category>
+        <name>Sport</name>
+        <Question>
+            <text>Where is the spiritual home of Surfing?</text>
+            <answer>Hawai'i</answer>
+            <choice>Eastbourne</choice>
+            <choice>San Diego</choice>
+            <choice>Montevideo</choice>
+        </Question>
+        <Question>
+            <text>Which is not a form of Fencing?</text>
+            <answer>Stiletto</answer>
+            <choice>Epee</choice>
+            <choice>Foil</choice>
+            <choice>Sabre</choice>
+        </Question>
+        <Question>
+            <text>A "face off" or "bully" is used to start and re-start which outdoor game?</text>
+            <answer>Hockey</answer>
+            <choice>Golf</choice>
+            <choice>Rounders</choice>
+            <choice>Rugby</choice>
+        </Question>
+        <Question>
+            <text>How many players make up a Polo team?</text>
+            <answer>4</answer>
+            <choice>3</choice>
+            <choice>5</choice>
+            <choice>6</choice>
+        </Question>
     </Category>
 </catalog>

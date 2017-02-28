@@ -35,20 +35,11 @@ public class QuestionSelection extends AppCompatActivity
             ArrayList<Question> questions;
             ArrayList<Category> categories;
             InputStream is = getAssets().open("data.xml");
-            /*
-            int streamLength = is.available();
-            byte[] streamData = new byte[streamLength];
-            is.read(streamData);
-            String xmlString = new String(streamData);
-            Log.d("xml file ", xmlString);
-            */
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
-
             Element element = doc.getDocumentElement();
             element.normalize();
-
             NodeList categoryList = doc.getElementsByTagName("Category");
             categories = new ArrayList<Category>();
             for (int i = 0;i < categoryList.getLength(); i++)
@@ -65,14 +56,9 @@ public class QuestionSelection extends AppCompatActivity
                         if (questionNode.getNodeType() == Node.ELEMENT_NODE)
                         {
                             Element questionElement = (Element) questionNode;
-//                            Log.d("Element Value:", getQuestionData("text",questionElement));
-//                            test = createQuestion(questionElement);
-//                            Log.d("test: ", test.toString());
                             questions.add(createQuestion(questionElement));
                         }
                     }
-//                    Category dummy = new Category(getSingleValue("name",categoryElement), questions.toArray(new Question[questions.size()]));
-//                    Log.d("category: ",dummy.toString());
                     categories.add(new Category(getSingleValue("name",categoryElement), questions.toArray(new Question[questions.size()])));
                 }
             }
@@ -137,10 +123,4 @@ public class QuestionSelection extends AppCompatActivity
         }
         return result;
     }
-/*
-    public static <T> T[] arraylistToArray(ArrayList<T> arrayList)
-    {
-        T[] result = new T[arrayList.size()];
-    }
-*/
 }
