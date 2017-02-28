@@ -115,11 +115,11 @@ public class QuestionSelection extends AppCompatActivity
     private String[] getMultipleValue(String tag, Element element)
     {
         String[] result;
-        NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
+        NodeList nodeList = element.getElementsByTagName(tag);
         result = new String[nodeList.getLength() + 1];
         for (int i = 0; i < nodeList.getLength(); i++)
         {
-            result[i] = nodeList.item(i).getNodeValue();
+            result[i] = nodeList.item(i).getTextContent();
         }
         return result;
     }
