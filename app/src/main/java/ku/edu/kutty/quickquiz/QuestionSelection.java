@@ -1,8 +1,15 @@
 package ku.edu.kutty.quickquiz;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,7 +36,7 @@ public class QuestionSelection extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_selection);
-
+    // XML
         try
         {
             ArrayList<Question> questions;
@@ -79,17 +86,53 @@ public class QuestionSelection extends AppCompatActivity
             e.printStackTrace();
             Log.d("Error: ", e.toString());
         }
-
+/*
         for (int i = 0; i < categories.length; i++)
         {
             Log.d("category ", categories[i].toString());
         }
-
-        /*
         Button button = new Button(this);
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_question_selection);
         */
+     // Layout
+        LinearLayout parent = (LinearLayout) findViewById(R.id.parentLayout);
+        LinearLayout[] categoryLayout = new LinearLayout[categories.length];
+        for (int i = 0; i < categories.length; i++)
+        {
+            categoryLayout[i] = new LinearLayout(this);
+            categoryLayout[i].setOrientation(LinearLayout.VERTICAL);
+            TextView categoryName = new TextView(this);
+            categoryName.setText(categories[i].getName());
+            categoryName.setGravity(Gravity.CENTER);
+            categoryLayout[i].addView(categoryName);
+            /*
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            params.weight = 1.0f;
+            categoryName.setLayoutParams(params);
+            */
+            for (int j = categories[i].getQuestions().length - 1; j >= 0; j--)
+            {
+                Button questionButton = new Button(this);
+                questionButton.setText(Integer.toString((j+1)*100));
+//                questionButton.setTag(i + " " + j);
+                questionButton.setOnClickListener(myOnClick(questionButton,i,j));
+                categoryLayout[i].addView(questionButton);
+            }
+            parent.addView(categoryLayout[i]);
+        }
+    }
+
+    View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
+    {
+        return new View.OnClickListener()
+        {
+            public void onClick(View view)
+            {
+                Log.d("test: ",categoryIndex + " " + questionIndex);
+            }
+        };
     }
 
     private Question createQuestion(Element questionElement)
