@@ -1,6 +1,7 @@
 package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,64 +39,52 @@ public class QuestionSelection extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_selection);
     // XML
-        try
-        {
-            ArrayList<Question> questions;
-            ArrayList<Category> categories;
-            InputStream is = getAssets().open("data.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(is);
-            Element element = doc.getDocumentElement();
-            element.normalize();
-            NodeList categoryList = doc.getElementsByTagName("Category");
-            categories = new ArrayList<Category>();
-            for (int i = 0;i < categoryList.getLength(); i++)
-            {
-                Node categoryNode = categoryList.item(i);
-                if (categoryNode.getNodeType() == Node.ELEMENT_NODE)
-                {
-                    Element categoryElement = (Element) categoryNode;
-                    NodeList questionList = categoryElement.getElementsByTagName("Question");
-                    questions = new ArrayList<Question>();
-                    for (int j = 0; j < questionList.getLength(); j++)
-                    {
-                        Node questionNode = questionList.item(j);
-                        if (questionNode.getNodeType() == Node.ELEMENT_NODE)
-                        {
-                            Element questionElement = (Element) questionNode;
-                            questions.add(createQuestion(questionElement));
-                        }
-                    }
-                    categories.add(new Category(getSingleValue("name",categoryElement), questions.toArray(new Question[questions.size()])));
-                }
-            }
-            this.categories =  categories.toArray(new Category[categories.size()]);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            Log.d("Error: ", e.toString());
-        }
-        catch (ParserConfigurationException e)
-        {
-            e.printStackTrace();
-            Log.d("Error: ", e.toString());
-        }
-        catch (SAXException e)
-        {
-            e.printStackTrace();
-            Log.d("Error: ", e.toString());
-        }
-/*
-        for (int i = 0; i < categories.length; i++)
-        {
-            Log.d("category ", categories[i].toString());
-        }
-        Button button = new Button(this);
+		if (Categories.getInstace() == null) {
+			try {
+				ArrayList<Question> questions;
+				ArrayList<Category> categories;
+				InputStream is = getAssets().open("data.xml");
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(is);
+				Element element = doc.getDocumentElement();
+				element.normalize();
+				NodeList categoryList = doc.getElementsByTagName("Category");
+				categories = new ArrayList<Category>();
+				for (int i = 0; i < categoryList.getLength(); i++) {
+					Node categoryNode = categoryList.item(i);
+					if (categoryNode.getNodeType() == Node.ELEMENT_NODE) {
+						Element categoryElement = (Element) categoryNode;
+						NodeList questionList = categoryElement.getElementsByTagName("Question");
+						questions = new ArrayList<Question>();
+						for (int j = 0; j < questionList.getLength(); j++) {
+							Node questionNode = questionList.item(j);
+							if (questionNode.getNodeType() == Node.ELEMENT_NODE) {
+								Element questionElement = (Element) questionNode;
+								questions.add(createQuestion(questionElement));
+							}
+						}
+						categories.add(new Category(getSingleValue("name", categoryElement), questions.toArray(new Question[questions.size()])));
+					}
+				}
+				this.categories = categories.toArray(new Category[categories.size()]);
+				Categories.initialize(this.categories);
+			} catch (IOException e) {
+				e.printStackTrace();
+				Log.d("Error: ", e.toString());
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+				Log.d("Error: ", e.toString());
+			} catch (SAXException e) {
+				e.printStackTrace();
+				Log.d("Error: ", e.toString());
+			}
+		}
+		else
+		{
+			categories = Categories.getInstace().getCategories();
+		}
 
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_question_selection);
-        */
      // Layout
         LinearLayout parent = (LinearLayout) findViewById(R.id.parentLayout);
         LinearLayout[] categoryLayout = new LinearLayout[categories.length];
@@ -171,4 +160,10 @@ public class QuestionSelection extends AppCompatActivity
         }
         return result;
     }
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+
+	}
 }

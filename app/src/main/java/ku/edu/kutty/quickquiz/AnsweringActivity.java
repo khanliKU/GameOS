@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class AnsweringActivity extends AppCompatActivity {
 
@@ -18,7 +19,8 @@ public class AnsweringActivity extends AppCompatActivity {
 		int categoryIndex = receivedIntent.getIntExtra("category",-1);
 		int questionIndex = receivedIntent.getIntExtra("question",-1);
 		Log.d("Indexes", categoryIndex + " " + questionIndex);
-
+		TextView questionText = (TextView) findViewById(R.id.questionText);
+		questionText.setText(Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getQuestionText());
 	}
 
 	public void goBack(View view)
