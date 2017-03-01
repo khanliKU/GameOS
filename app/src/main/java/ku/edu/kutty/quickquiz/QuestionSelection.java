@@ -111,42 +111,63 @@ public class QuestionSelection extends AppCompatActivity
                 Button questionButton = new Button(this);
                 questionButton.setText(Integer.toString((j+1)*100));
                 questionButton.setOnClickListener(myOnClick(questionButton,i,j));
-				if (categories[i].getQuestions()[j].isAnswered())
-				{
-					questionButton.setBackgroundColor(Color.GREEN);
-				}
-				else if (categories[i].getQuestions()[j].isAttempted())
-				{
-					questionButton.setBackgroundColor(Color.RED);
-				}
-				else if (categories[i].getQuestions()[j].isRead())
-				{
-					questionButton.setBackgroundColor(Color.GRAY);
-				}
-				else
-				{
-					questionButton.setBackgroundColor(Color.BLUE);
-				}
+				questionButton.setBackgroundColor(Color.GRAY);
 				questionButton.setLayoutParams(params);
                 categoryLayout[i].addView(questionButton);
             }
             parent.addView(categoryLayout[i]);
         }
+    }
 
+	@Override
+	protected void onRestart()
+	{
+		super.onRestart();
 		Intent gameOverIntent = new Intent(QuestionSelection.this, GameOverActivity.class);
 		if (checkForLoss())
 		{
 			gameOverIntent.putExtra("won",false);
 			startActivity(gameOverIntent);
+			finish();
 		}
 		else if (checkForWin())
 		{
 			gameOverIntent.putExtra("won",true);
 			startActivity(gameOverIntent);
+			finish();
 		}
-    }
+		updateUI();
+	}
 
-    View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
+	private void updateUI()
+	{
+		LinearLayout parent = (LinearLayout) findViewById(R.id.parentLayout);
+		for (int i = 0; i < categories.length; i++)
+		{
+			for (int j = categories[i].getQuestions().length - 1; j >= 0; j--)
+			{
+
+				if (categories[i].getQuestions()[j].isAnswered())
+				{
+					((LinearLayout) parent.getChildAt(i)).getChildAt(categories[i].getQuestions().length - j).setBackgroundColor(Color.GREEN);
+				}
+				else if (categories[i].getQuestions()[j].isAttempted())
+				{
+					((LinearLayout) parent.getChildAt(i)).getChildAt(categories[i].getQuestions().length - j).setBackgroundColor(Color.RED);
+				}
+				else if (categories[i].getQuestions()[j].isRead())
+				{
+					((LinearLayout) parent.getChildAt(i)).getChildAt(categories[i].getQuestions().length - j).setBackgroundColor(Color.BLUE);
+				}
+				else
+				{
+					((LinearLayout) parent.getChildAt(i)).getChildAt(categories[i].getQuestions().length - j).setBackgroundColor(Color.GRAY);
+				}
+			}
+		}
+	}
+
+	View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
     {
         return new View.OnClickListener()
         {

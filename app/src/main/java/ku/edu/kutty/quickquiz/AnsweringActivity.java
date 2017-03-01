@@ -29,7 +29,7 @@ public class AnsweringActivity extends AppCompatActivity {
 			final TableRow choice = new TableRow(this);
 			choice.setId(index);
 			TextView choiceText = new TextView(this);
-			choiceText.setTextSize(20);
+			choiceText.setTextSize(24);
 			choiceText.setText(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
 			choice.addView(choiceText);
 			if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
@@ -85,11 +85,4 @@ public class AnsweringActivity extends AppCompatActivity {
 			}
 		}
 	}
-
-	public void goBack(View view)
-	{
-		Intent goBackIntent = new Intent(AnsweringActivity.this, QuestionSelection.class);
-		startActivity(goBackIntent);
-	}
-
 }

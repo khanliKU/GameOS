@@ -10,34 +10,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ku.edu.kutty.quickquiz.AnsweringActivity">
 
-    <Button
-        android:text="Go Back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="26dp"
-        android:id="@+id/goBackButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:elevation="0dp"
-        android:textAlignment="center"
-        android:onClick="goBack"/>
-
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/questionText"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textSize="18sp"/>
 
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:id="@+id/answerTable">
 
     </TableLayout>

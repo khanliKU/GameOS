@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
                         User.initialize(nickname);
                         Intent intent = new Intent(LoginActivity.this, QuestionSelection.class);
                         startActivity(intent);
+                        finish();
                     }
                 }
                 return false;
