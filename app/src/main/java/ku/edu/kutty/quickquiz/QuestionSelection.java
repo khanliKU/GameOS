@@ -2,15 +2,11 @@ package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.PersistableBundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,8 +36,12 @@ public class QuestionSelection extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_selection);
+		TextView nicknameTextView = (TextView) findViewById(R.id.nickname);
+		nicknameTextView.setText(User.getInstance().getNickname());
+		TextView scoreTextView = (TextView) findViewById(R.id.score);
+		scoreTextView.setText("Score: " + User.getInstance().getScore());
     // XML
-		if (Categories.getInstace() == null) {
+		if (Categories.getInstance() == null) {
 			try {
 				ArrayList<Question> questions;
 				ArrayList<Category> categories;
@@ -84,7 +84,7 @@ public class QuestionSelection extends AppCompatActivity
 		}
 		else
 		{
-			categories = Categories.getInstace().getCategories();
+			categories = Categories.getInstance().getCategories();
 		}
 
      // Layout
@@ -98,6 +98,7 @@ public class QuestionSelection extends AppCompatActivity
             TextView categoryName = new TextView(this);
             categoryName.setText(categories[i].getName());
             categoryName.setGravity(Gravity.CENTER);
+			categoryName.setTextSize(20);
             categoryLayout[i].addView(categoryName);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -132,10 +133,8 @@ public class QuestionSelection extends AppCompatActivity
             parent.addView(categoryLayout[i]);
         }
 
-		// TODO add nickname and score
-		// TODO update color of questions
-		// TODO limit question accesbility
-
+		Log.d("Loss: ", String.valueOf(checkForLoss()));
+		Log.d("Win: ", String.valueOf(checkForWin()));
     }
 
     View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
@@ -144,11 +143,13 @@ public class QuestionSelection extends AppCompatActivity
         {
             public void onClick(View view)
             {
-//                Log.d("test: ",categoryIndex + " " + questionIndex);
-                Intent answerIntent = new Intent(QuestionSelection.this, AnsweringActivity.class);
-                answerIntent.putExtra("category",categoryIndex);
-                answerIntent.putExtra("question",questionIndex);
-                startActivity(answerIntent);
+				if (questionIndex <= Categories.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex()) {
+					Intent answerIntent = new Intent(QuestionSelection.this, AnsweringActivity.class);
+					answerIntent.putExtra("category", categoryIndex);
+					answerIntent.putExtra("question", questionIndex);
+					answerIntent.putExtra("points", 100 * (questionIndex + 1));
+					startActivity(answerIntent);
+				}
             }
         };
     }
@@ -185,9 +186,30 @@ public class QuestionSelection extends AppCompatActivity
         return result;
     }
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState)
+	private boolean checkForWin()
 	{
+		for (int categoryIndex = 0; categoryIndex < Categories.getInstance().getCategories().length; categoryIndex++)
+		{
+			if (Categories.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex() !=
+					Categories.getInstance().getCategories()[categoryIndex].getQuestions().length)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 
+	private boolean checkForLoss()
+	{
+		for (int categoryIndex = 0; categoryIndex < Categories.getInstance().getCategories().length; categoryIndex++)
+		{
+			int maxAllowed = Categories.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex();
+			if (maxAllowed == Categories.getInstance().getCategories()[categoryIndex].getQuestions().length ||
+					!Categories.getInstance().getCategories()[categoryIndex].getQuestions()[maxAllowed].isAttempted())
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }

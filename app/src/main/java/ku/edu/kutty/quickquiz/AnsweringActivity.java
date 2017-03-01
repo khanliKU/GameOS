@@ -5,9 +5,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,25 +20,26 @@ public class AnsweringActivity extends AppCompatActivity {
 		Intent receivedIntent = getIntent();
 		final int categoryIndex = receivedIntent.getIntExtra("category",-1);
 		final int questionIndex = receivedIntent.getIntExtra("question",-1);
+		final int points = receivedIntent.getIntExtra("points",0);
 		TextView questionText = (TextView) findViewById(R.id.questionText);
-		questionText.setText(Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getQuestionText());
+		questionText.setText(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getQuestionText());
 		final TableLayout table = (TableLayout) findViewById(R.id.answerTable);
-		for (int index = 0; index < Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++)
+		for (int index = 0; index < Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++)
 		{
 			final TableRow choice = new TableRow(this);
 			choice.setId(index);
 			TextView choiceText = new TextView(this);
 			choiceText.setTextSize(20);
-			choiceText.setText(Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
+			choiceText.setText(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
 			choice.addView(choiceText);
-			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
-				if (index == Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
-					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+			if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
+				if (index == Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
+					if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
 						choice.setBackgroundColor(Color.GREEN);
 					} else {
 						choice.setBackgroundColor(Color.YELLOW);
 					}
-				} else if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+				} else if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
 					choice.setBackgroundColor(Color.RED);
 				}
 			}
@@ -48,11 +47,11 @@ public class AnsweringActivity extends AppCompatActivity {
 			{
 				public void onClick(View view)
 				{
-					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt() < 0)
+					if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt() < 0)
 					{
 						final int choiceIndex = view.getId();
 						view.setBackgroundColor(Color.YELLOW);
-						Categories.getInstace().answer(categoryIndex,questionIndex,choiceIndex);
+						Categories.getInstance().answer(categoryIndex,questionIndex,choiceIndex,points);
 						final Handler handler = new Handler();
 						handler.postDelayed(new Runnable()
 						{
@@ -71,16 +70,16 @@ public class AnsweringActivity extends AppCompatActivity {
 
 	public void updateColor(int categoryIndex, int questionIndex)
 	{
-		for (int index = 0; index < Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++) {
+		for (int index = 0; index < Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++) {
 			TableRow choice = (TableRow) findViewById(index);
-			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
-				if (index == Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
-					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+			if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
+				if (index == Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
+					if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
 						choice.setBackgroundColor(Color.GREEN);
 					} else {
 						choice.setBackgroundColor(Color.YELLOW);
 					}
-				} else if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+				} else if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
 					choice.setBackgroundColor(Color.RED);
 				}
 			}

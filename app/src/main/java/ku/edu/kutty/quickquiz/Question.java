@@ -42,6 +42,7 @@ public class Question
 
     public String getQuestionText()
     {
+		read = true;
         return questionText;
     }
 
@@ -62,14 +63,17 @@ public class Question
         return choices;
     }
 
-    public void answer(int index)
+    public boolean answer(int index, int points)
     {
 		this.attempted = true;
 		this.attempt = index;
 		if (index == getRightAnswerIndex())
 		{
 			answered = true;
+			User.getInstance().awardPoints(points);
+			return true;
 		}
+		return false;
     }
 
     public void read()

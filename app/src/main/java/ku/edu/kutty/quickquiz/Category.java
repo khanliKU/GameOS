@@ -8,12 +8,17 @@ public class Category
 {
     private String name;
     private Question[] questions;
+    private int maxAllowedIndex = 0;
 
     public Category(String name, Question[] questions)
     {
         this.name = name;
         this.questions = questions;
         Question.shuffleArray(this.questions);
+    }
+
+    public int getMaxAllowedIndex() {
+        return maxAllowedIndex;
     }
 
     public String getName()
@@ -26,9 +31,12 @@ public class Category
         return  questions;
     }
 
-    public void answer(int questionIndex, int choiceIndex)
+    public void answer(int questionIndex, int choiceIndex, int points)
     {
-        questions[questionIndex].answer(choiceIndex);
+        if (questions[questionIndex].answer(choiceIndex, points))
+        {
+            maxAllowedIndex++;
+        }
     }
 
     @Override

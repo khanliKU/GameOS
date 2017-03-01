@@ -31,7 +31,7 @@ public class User
         return score;
     }
 
-    public void addPoints(int points)
+    public void awardPoints(int points)
     {
         if (points > 0)
         {
@@ -45,5 +45,10 @@ public class User
         {
             instance = new User(nickname);
         }
+    }
+
+    public static void reset()
+    {
+        instance = null;
     }
 }

@@ -6,7 +6,7 @@ package ku.edu.kutty.quickquiz;
 
 public class Categories
 {
-	private static Categories instace = null;
+	private static Categories instance = null;
 	private Category[] categories;
 
 	private Categories(Category[] categories)
@@ -14,26 +14,31 @@ public class Categories
 		this.categories = categories;
 	}
 
-	public static Categories getInstace()
+	public static Categories getInstance()
 	{
-		return instace;
+		return instance;
 	}
 
 	public static void initialize(Category[] categories)
 	{
-		if (instace == null)
+		if (instance == null)
 		{
-			instace = new Categories(categories);
+			instance = new Categories(categories);
 		}
 	}
 
-	public void answer(int categoryIndex, int questionIndex, int choiceIndex)
+	public void answer(int categoryIndex, int questionIndex, int choiceIndex, int points)
 	{
-		this.categories[categoryIndex].answer(questionIndex,choiceIndex);
+		this.categories[categoryIndex].answer(questionIndex,choiceIndex,points);
 	}
 
 	public Category[] getCategories()
 	{
 		return categories;
+	}
+
+	public static void reset()
+	{
+		instance = null;
 	}
 }

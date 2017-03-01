@@ -31,8 +31,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (nickname.length() > 0)
                     {
                         User.initialize(nickname);
-                        Log.d("name: ", User.getInstance().getNickname());
-                        Log.d("score: ", Integer.toString(User.getInstance().getScore()));
                         Intent intent = new Intent(LoginActivity.this, QuestionSelection.class);
                         startActivity(intent);
                     }
