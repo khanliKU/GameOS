@@ -87,6 +87,7 @@ public class QuestionSelection extends AppCompatActivity
 
      // Layout
         LinearLayout parent = (LinearLayout) findViewById(R.id.parentLayout);
+		parent.setGravity(Gravity.CENTER);
         LinearLayout[] categoryLayout = new LinearLayout[categories.length];
         for (int i = 0; i < categories.length; i++)
         {
