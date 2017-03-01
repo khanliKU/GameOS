@@ -3,6 +3,13 @@
     <Category>
         <name>History</name>
         <Question>
+            <text>World War I began in which year?</text>
+            <answer>1914</answer>
+            <choice>1923</choice>
+            <choice>1938</choice>
+            <choice>1917</choice>
+        </Question>
+        <Question>
             <text>When did the Ottoman's conquer Constantinople?</text>
             <answer>1453</answer>
             <choice>1199</choice>
@@ -34,6 +41,13 @@
     <Category>
         <name>Art</name>
         <Question>
+            <text>What is the name of the 1940 work by Salvador Dali in which a disembodied face hovers over a desert landscape?</text>
+            <answer>The Face of War</answer>
+            <choice>The Fallacy of War</choice>
+            <choice>The Fantasy of War</choice>
+            <choice>The Future of War</choice>
+        </Question>
+        <Question>
             <text>What is the location of London's National Gallery?</text>
             <answer>Trafalgar Square</answer>
             <choice>Grosvenor Square</choice>
@@ -64,6 +78,13 @@
     </Category>
     <Category>
         <name>Sport</name>
+        <Question>
+            <text>Which city hosted the 2016 Olympics?</text>
+            <answer>Rio</answer>
+            <choice>Pekin</choice>
+            <choice>London</choice>
+            <choice>Quatar</choice>
+        </Question>
         <Question>
             <text>Where is the spiritual home of Surfing?</text>
             <answer>Hawai'i</answer>

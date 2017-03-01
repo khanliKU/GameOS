@@ -110,8 +110,8 @@ public class QuestionSelection extends AppCompatActivity
 						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 				buttonParams.weight = 1.0f;
 				buttonParams.gravity = Gravity.CENTER;
-				buttonParams.topMargin = 10;
-				buttonParams.bottomMargin = 10;
+				buttonParams.topMargin = 5;
+				buttonParams.bottomMargin = 5;
                 Button questionButton = new Button(this);
                 questionButton.setText(Integer.toString((j+1)*100));
                 questionButton.setOnClickListener(myOnClick(questionButton,i,j));
