@@ -30,5 +30,16 @@
         android:layout_marginTop="65dp"
         android:id="@+id/questionText"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"/>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/answerTable">
+
+    </TableLayout>
+
 </RelativeLayout>

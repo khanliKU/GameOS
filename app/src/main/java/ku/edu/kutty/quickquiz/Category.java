@@ -26,6 +26,11 @@ public class Category
         return  questions;
     }
 
+    public void answer(int questionIndex, int choiceIndex)
+    {
+        questions[questionIndex].answer(choiceIndex);
+    }
+
     @Override
     public String toString()
     {

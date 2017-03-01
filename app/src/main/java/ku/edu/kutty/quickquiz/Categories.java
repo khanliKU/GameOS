@@ -27,6 +27,11 @@ public class Categories
 		}
 	}
 
+	public void answer(int categoryIndex, int questionIndex, int choiceIndex)
+	{
+		this.categories[categoryIndex].answer(questionIndex,choiceIndex);
+	}
+
 	public Category[] getCategories()
 	{
 		return categories;

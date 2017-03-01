@@ -12,6 +12,7 @@ public class Question
     private String rightAnswer;
     private String[] choices;
     private boolean read = false;
+	private int attempt = -1;
     private boolean answered = false;
 
     public Question(String questionText, String rightAnswer, String[] choices)
@@ -32,6 +33,8 @@ public class Question
         return read;
     }
 
+	public int getAttempt() { return attempt; }
+
     public String getQuestionText()
     {
         return questionText;
@@ -47,12 +50,18 @@ public class Question
         return choices;
     }
 
-    public void answer(String answer)
+    public void answer(int index)
     {
-        if (rightAnswer.equals(answer))
+        if (rightAnswer.equals(choices[index]))
         {
-            answered = true;
+            this.answered = true;
         }
+		this.attempt = index;
+    }
+
+    public void read()
+    {
+        this.read = true;
     }
 
     @Override
