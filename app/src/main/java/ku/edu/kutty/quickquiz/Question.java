@@ -13,6 +13,7 @@ public class Question
     private String[] choices;
     private boolean read = false;
 	private int attempt = -1;
+	private int timeleft = 30;
     private boolean answered = false;
     private boolean attempted = false;
 
@@ -24,7 +25,21 @@ public class Question
         shuffleArray(choices);
     }
 
-    public boolean isAnswered()
+	public int getTimeLeft() {
+		return timeleft;
+	}
+
+	public boolean decrementTimeLeft()
+	{
+		if (timeleft > 0)
+		{
+			timeleft--;
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isAnswered()
     {
         return answered;
     }

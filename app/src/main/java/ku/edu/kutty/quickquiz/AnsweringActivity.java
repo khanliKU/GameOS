@@ -5,13 +5,17 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class AnsweringActivity extends AppCompatActivity {
-
+public class AnsweringActivity extends AppCompatActivity
+{
+	final Handler handler = new Handler();
+	private Runnable countdownRunnable;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -29,9 +33,11 @@ public class AnsweringActivity extends AppCompatActivity {
 			final TableRow choice = new TableRow(this);
 			choice.setId(index);
 			TextView choiceText = new TextView(this);
+			choiceText.setGravity(Gravity.CENTER);
 			choiceText.setTextSize(24);
 			choiceText.setText(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
 			choice.addView(choiceText);
+			choice.setGravity(Gravity.CENTER);
 			if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
 				if (index == Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
 					if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
@@ -52,7 +58,7 @@ public class AnsweringActivity extends AppCompatActivity {
 						final int choiceIndex = view.getId();
 						view.setBackgroundColor(Color.YELLOW);
 						Categories.getInstance().answer(categoryIndex,questionIndex,choiceIndex,points);
-						final Handler handler = new Handler();
+						handler.removeCallbacksAndMessages(null);
 						handler.postDelayed(new Runnable()
 						{
 							@Override
@@ -61,11 +67,50 @@ public class AnsweringActivity extends AppCompatActivity {
 								updateColor(categoryIndex,questionIndex);
 							}
 						}, 1000);
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								finish();
+							}
+						}, 3000);
 					}
 				}
 			});
 			table.addView(choice);
 		}
+		final TextView countdownTextView = (TextView) findViewById(R.id.countdownTextView);
+		countdownTextView.setTextColor(Color.RED);
+		countdownRunnable = new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				countdownTextView.setText(Integer.toString(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getTimeLeft()));
+				if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].decrementTimeLeft())
+				{
+					handler.postDelayed(this, 1000);
+				}
+				else
+				{
+					finish();
+				}
+			}
+		};
+	}
+
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		handler.removeCallbacksAndMessages(null);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		handler.post(countdownRunnable);
 	}
 
 	public void updateColor(int categoryIndex, int questionIndex)
