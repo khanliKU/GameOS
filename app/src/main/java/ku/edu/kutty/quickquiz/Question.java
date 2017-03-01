@@ -40,9 +40,16 @@ public class Question
         return questionText;
     }
 
-    public String getRightAnswer()
+    public int getRightAnswerIndex()
     {
-        return  rightAnswer;
+        for (int index = 0; index < choices.length; index++)
+		{
+			if (choices[index].equals(rightAnswer))
+			{
+				return index;
+			}
+		}
+		return  -1;
     }
 
     public String[] getChoices()
@@ -52,10 +59,7 @@ public class Question
 
     public void answer(int index)
     {
-        if (rightAnswer.equals(choices[index]))
-        {
-            this.answered = true;
-        }
+		this.answered = true;
 		this.attempt = index;
     }
 

@@ -21,37 +21,53 @@ public class AnsweringActivity extends AppCompatActivity {
 		Intent receivedIntent = getIntent();
 		final int categoryIndex = receivedIntent.getIntExtra("category",-1);
 		final int questionIndex = receivedIntent.getIntExtra("question",-1);
-		Log.d("Indexes", categoryIndex + " " + questionIndex);
 		TextView questionText = (TextView) findViewById(R.id.questionText);
 		questionText.setText(Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getQuestionText());
 		final TableLayout table = (TableLayout) findViewById(R.id.answerTable);
-		for (int i = 0; i < Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; i++)
+		for (int index = 0; index < Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++)
 		{
 			final TableRow choice = new TableRow(this);
-			choice.setId(i);
+			choice.setId(index);
 			TextView choiceText = new TextView(this);
 			choiceText.setTextSize(20);
-			choiceText.setText(Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[i]);
+			choiceText.setText(Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
 			choice.addView(choiceText);
-			if (i == Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt())
-			{
-				choice.setBackgroundColor(Color.GREEN);
+			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+				if (index == Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
+					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+						choice.setBackgroundColor(Color.GREEN);
+					}
+					else
+					{
+						choice.setBackgroundColor(Color.RED);
+					}
+				}
+				else if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index)
+				{
+					choice.setBackgroundColor(Color.YELLOW);
+				}
 			}
 			choice.setOnClickListener(new View.OnClickListener()
 			{
 				public void onClick(View view)
 				{
-					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt() >= 0)
+					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt() < 0)
 					{
 						int choiceIndex = view.getId();
 						Log.d("asd: ", Integer.toString(view.getId()));
 						view.setBackgroundColor(Color.YELLOW);
 						Categories.getInstace().answer(categoryIndex,questionIndex,choiceIndex);
+
 					}
 				}
 			});
 			table.addView(choice);
 		}
+	}
+
+	public void update(int categoryIndex, int questionIndex)
+	{
+
 	}
 
 	public void goBack(View view)
