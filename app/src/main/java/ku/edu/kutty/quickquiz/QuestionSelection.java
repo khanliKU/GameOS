@@ -38,8 +38,6 @@ public class QuestionSelection extends AppCompatActivity
         setContentView(R.layout.activity_question_selection);
 		TextView nicknameTextView = (TextView) findViewById(R.id.nickname);
 		nicknameTextView.setText(User.getInstance().getNickname());
-		TextView scoreTextView = (TextView) findViewById(R.id.score);
-		scoreTextView.setText("Score: " + User.getInstance().getScore());
     // XML
 		if (Categories.getInstance() == null) {
 			try {
@@ -108,39 +106,37 @@ public class QuestionSelection extends AppCompatActivity
 
             for (int j = categories[i].getQuestions().length - 1; j >= 0; j--)
             {
+				LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				buttonParams.weight = 1.0f;
+				buttonParams.gravity = Gravity.CENTER;
+				buttonParams.topMargin = 10;
+				buttonParams.bottomMargin = 10;
                 Button questionButton = new Button(this);
                 questionButton.setText(Integer.toString((j+1)*100));
                 questionButton.setOnClickListener(myOnClick(questionButton,i,j));
 				questionButton.setBackgroundColor(Color.GRAY);
-				questionButton.setLayoutParams(params);
+				questionButton.setLayoutParams(buttonParams);
                 categoryLayout[i].addView(questionButton);
             }
             parent.addView(categoryLayout[i]);
         }
+		updateUI();
+		checkEndGame();
     }
 
 	@Override
 	protected void onRestart()
 	{
 		super.onRestart();
-		Intent gameOverIntent = new Intent(QuestionSelection.this, GameOverActivity.class);
-		if (checkForLoss())
-		{
-			gameOverIntent.putExtra("won",false);
-			startActivity(gameOverIntent);
-			finish();
-		}
-		else if (checkForWin())
-		{
-			gameOverIntent.putExtra("won",true);
-			startActivity(gameOverIntent);
-			finish();
-		}
 		updateUI();
+		checkEndGame();
 	}
 
 	private void updateUI()
 	{
+		TextView scoreTextView = (TextView) findViewById(R.id.score);
+		scoreTextView.setText("Score: " + User.getInstance().getScore());
 		LinearLayout parent = (LinearLayout) findViewById(R.id.parentLayout);
 		for (int i = 0; i < categories.length; i++)
 		{
@@ -241,5 +237,22 @@ public class QuestionSelection extends AppCompatActivity
 			}
 		}
 		return true;
+	}
+
+	private void checkEndGame()
+	{
+		Intent gameOverIntent = new Intent(QuestionSelection.this, GameOverActivity.class);
+		if (checkForLoss())
+		{
+			gameOverIntent.putExtra("won",false);
+			startActivity(gameOverIntent);
+			finish();
+		}
+		else if (checkForWin())
+		{
+			gameOverIntent.putExtra("won",true);
+			startActivity(gameOverIntent);
+			finish();
+		}
 	}
 }

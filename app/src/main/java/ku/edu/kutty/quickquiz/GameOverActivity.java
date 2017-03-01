@@ -1,6 +1,7 @@
 package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +24,12 @@ public class GameOverActivity extends AppCompatActivity {
 		if (won)
 		{
 			statusTextView.setText("You Won!");
+			statusTextView.setTextColor(Color.GREEN);
 		}
 		else
 		{
 			statusTextView.setText("Game Over!");
+			statusTextView.setTextColor(Color.RED);
 		}
 		scoreTextView.setText("Your score:\n" + User.getInstance().getScore());
 		nicknameTextView.setText(User.getInstance().getNickname());
@@ -41,6 +44,7 @@ public class GameOverActivity extends AppCompatActivity {
 				Categories.reset();
 				Intent restartIntent = new Intent(GameOverActivity.this ,LoginActivity.class);
 				startActivity(restartIntent);
+				finish();
 			}
 		});
 

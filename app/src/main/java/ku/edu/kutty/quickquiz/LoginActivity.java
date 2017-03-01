@@ -13,9 +13,16 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (User.getInstance() != null)
+        {
+            performSeque();
+        }
+
         // initialize UI elements
         final EditText nicknameEditText = (EditText) findViewById(R.id.editTextNickname);
 
@@ -28,16 +35,21 @@ public class LoginActivity extends AppCompatActivity {
                         || actionId == EditorInfo.IME_ACTION_DONE)
                 {
                     String nickname = nicknameEditText.getText().toString();
+                    User.initialize(nickname);
                     if (nickname.length() > 0)
                     {
-                        User.initialize(nickname);
-                        Intent intent = new Intent(LoginActivity.this, QuestionSelection.class);
-                        startActivity(intent);
-                        finish();
+                        performSeque();
                     }
                 }
                 return false;
             }
         });
+    }
+
+    private void performSeque()
+    {
+        Intent intent = new Intent(LoginActivity.this, QuestionSelection.class);
+        startActivity(intent);
+        finish();
     }
 }
