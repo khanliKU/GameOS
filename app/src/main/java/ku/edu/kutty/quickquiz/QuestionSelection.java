@@ -113,6 +113,9 @@ public class QuestionSelection extends AppCompatActivity
             }
             parent.addView(categoryLayout[i]);
         }
+
+		// TODO add nickname and score
+		// TODO update color of questions
     }
 
     View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
