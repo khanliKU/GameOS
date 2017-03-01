@@ -133,8 +133,17 @@ public class QuestionSelection extends AppCompatActivity
             parent.addView(categoryLayout[i]);
         }
 
-		Log.d("Loss: ", String.valueOf(checkForLoss()));
-		Log.d("Win: ", String.valueOf(checkForWin()));
+		Intent gameOverIntent = new Intent(QuestionSelection.this, GameOverActivity.class);
+		if (checkForLoss())
+		{
+			gameOverIntent.putExtra("won",false);
+			startActivity(gameOverIntent);
+		}
+		else if (checkForWin())
+		{
+			gameOverIntent.putExtra("won",true);
+			startActivity(gameOverIntent);
+		}
     }
 
     View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
