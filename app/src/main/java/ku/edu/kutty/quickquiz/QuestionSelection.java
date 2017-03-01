@@ -2,6 +2,7 @@ package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -98,16 +99,15 @@ public class QuestionSelection extends AppCompatActivity
             categoryName.setText(categories[i].getName());
             categoryName.setGravity(Gravity.CENTER);
             categoryLayout[i].addView(categoryName);
-            /*
+
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             params.weight = 1.0f;
-            categoryName.setLayoutParams(params);
-            */
+            categoryLayout[i].setLayoutParams(params);
+
             for (int j = categories[i].getQuestions().length - 1; j >= 0; j--)
             {
                 Button questionButton = new Button(this);
-				questionButton.setBackground(getResources().getDrawable(R.drawable.mybutton));
                 questionButton.setText(Integer.toString((j+1)*100));
                 questionButton.setOnClickListener(myOnClick(questionButton,i,j));
 				if (categories[i].getQuestions()[j].isAnswered())
@@ -126,6 +126,7 @@ public class QuestionSelection extends AppCompatActivity
 				{
 					questionButton.setBackgroundColor(Color.BLUE);
 				}
+				questionButton.setLayoutParams(params);
                 categoryLayout[i].addView(questionButton);
             }
             parent.addView(categoryLayout[i]);

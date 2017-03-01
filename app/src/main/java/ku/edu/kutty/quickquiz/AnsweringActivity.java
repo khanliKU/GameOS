@@ -33,19 +33,15 @@ public class AnsweringActivity extends AppCompatActivity {
 			choiceText.setTextSize(20);
 			choiceText.setText(Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
 			choice.addView(choiceText);
-			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
 				if (index == Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
-					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
 						choice.setBackgroundColor(Color.GREEN);
+					} else {
+						choice.setBackgroundColor(Color.YELLOW);
 					}
-					else
-					{
-						choice.setBackgroundColor(Color.RED);
-					}
-				}
-				else if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index)
-				{
-					choice.setBackgroundColor(Color.YELLOW);
+				} else if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+					choice.setBackgroundColor(Color.RED);
 				}
 			}
 			choice.setOnClickListener(new View.OnClickListener()
@@ -63,7 +59,7 @@ public class AnsweringActivity extends AppCompatActivity {
 							@Override
 							public void run()
 							{
-								updateColor(categoryIndex,questionIndex,choiceIndex);
+								updateColor(categoryIndex,questionIndex);
 							}
 						}, 1000);
 					}
@@ -73,21 +69,19 @@ public class AnsweringActivity extends AppCompatActivity {
 		}
 	}
 
-	public void updateColor(int categoryIndex, int questionIndex, int choiceIndex)
+	public void updateColor(int categoryIndex, int questionIndex)
 	{
-		final TableLayout table = (TableLayout) findViewById(R.id.answerTable);
 		for (int index = 0; index < Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++) {
 			TableRow choice = (TableRow) findViewById(index);
-			TextView choiceText = new TextView(this);
-			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
 				if (index == Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
-					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
 						choice.setBackgroundColor(Color.GREEN);
 					} else {
-						choice.setBackgroundColor(Color.RED);
+						choice.setBackgroundColor(Color.YELLOW);
 					}
 				} else if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
-					choice.setBackgroundColor(Color.YELLOW);
+					choice.setBackgroundColor(Color.RED);
 				}
 			}
 		}
