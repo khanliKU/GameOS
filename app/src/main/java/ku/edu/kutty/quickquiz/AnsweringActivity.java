@@ -2,6 +2,7 @@ package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,11 +54,18 @@ public class AnsweringActivity extends AppCompatActivity {
 				{
 					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt() < 0)
 					{
-						int choiceIndex = view.getId();
-						Log.d("asd: ", Integer.toString(view.getId()));
+						final int choiceIndex = view.getId();
 						view.setBackgroundColor(Color.YELLOW);
 						Categories.getInstace().answer(categoryIndex,questionIndex,choiceIndex);
-
+						final Handler handler = new Handler();
+						handler.postDelayed(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								updateColor(categoryIndex,questionIndex,choiceIndex);
+							}
+						}, 1000);
 					}
 				}
 			});
@@ -65,9 +73,24 @@ public class AnsweringActivity extends AppCompatActivity {
 		}
 	}
 
-	public void update(int categoryIndex, int questionIndex)
+	public void updateColor(int categoryIndex, int questionIndex, int choiceIndex)
 	{
-
+		final TableLayout table = (TableLayout) findViewById(R.id.answerTable);
+		for (int index = 0; index < Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++) {
+			TableRow choice = (TableRow) findViewById(index);
+			TextView choiceText = new TextView(this);
+			if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+				if (index == Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
+					if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+						choice.setBackgroundColor(Color.GREEN);
+					} else {
+						choice.setBackgroundColor(Color.RED);
+					}
+				} else if (Categories.getInstace().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+					choice.setBackgroundColor(Color.YELLOW);
+				}
+			}
+		}
 	}
 
 	public void goBack(View view)
