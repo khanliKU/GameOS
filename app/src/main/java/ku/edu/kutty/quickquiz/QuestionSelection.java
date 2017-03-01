@@ -1,6 +1,7 @@
 package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -106,9 +107,25 @@ public class QuestionSelection extends AppCompatActivity
             for (int j = categories[i].getQuestions().length - 1; j >= 0; j--)
             {
                 Button questionButton = new Button(this);
+				questionButton.setBackground(getResources().getDrawable(R.drawable.mybutton));
                 questionButton.setText(Integer.toString((j+1)*100));
-//                questionButton.setTag(i + " " + j);
                 questionButton.setOnClickListener(myOnClick(questionButton,i,j));
+				if (categories[i].getQuestions()[j].isAnswered())
+				{
+					questionButton.setBackgroundColor(Color.GREEN);
+				}
+				else if (categories[i].getQuestions()[j].isAttempted())
+				{
+					questionButton.setBackgroundColor(Color.RED);
+				}
+				else if (categories[i].getQuestions()[j].isRead())
+				{
+					questionButton.setBackgroundColor(Color.GRAY);
+				}
+				else
+				{
+					questionButton.setBackgroundColor(Color.BLUE);
+				}
                 categoryLayout[i].addView(questionButton);
             }
             parent.addView(categoryLayout[i]);
@@ -116,6 +133,8 @@ public class QuestionSelection extends AppCompatActivity
 
 		// TODO add nickname and score
 		// TODO update color of questions
+		// TODO limit question accesbility
+
     }
 
     View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
