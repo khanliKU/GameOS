@@ -4,17 +4,18 @@ package ku.edu.kutty.quickquiz;
  * Created by kutty on 28/02/2017.
  */
 
-public class Categories
+public class QuickQuiz
 {
-	private static Categories instance = null;
+	private static QuickQuiz instance = null;
 	private Category[] categories;
+	private int score;
 
-	private Categories(Category[] categories)
+	private QuickQuiz(Category[] categories)
 	{
 		this.categories = categories;
 	}
 
-	public static Categories getInstance()
+	public static QuickQuiz getInstance()
 	{
 		return instance;
 	}
@@ -23,7 +24,7 @@ public class Categories
 	{
 		if (instance == null)
 		{
-			instance = new Categories(categories);
+			instance = new QuickQuiz(categories);
 		}
 	}
 
@@ -40,5 +41,18 @@ public class Categories
 	public static void reset()
 	{
 		instance = null;
+	}
+	
+	public int getScore()
+	{
+		return score;
+	}
+	
+	public void awardPoints(int points)
+	{
+		if (points > 0)
+		{
+			score += points;
+		}
 	}
 }

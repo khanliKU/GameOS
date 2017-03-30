@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,26 +25,26 @@ public class AnsweringActivity extends AppCompatActivity
 		final int questionIndex = receivedIntent.getIntExtra("question",-1);
 		final int points = receivedIntent.getIntExtra("points",0);
 		TextView questionText = (TextView) findViewById(R.id.questionText);
-		questionText.setText(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getQuestionText());
+		questionText.setText(QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getQuestionText());
 		final TableLayout table = (TableLayout) findViewById(R.id.answerTable);
-		for (int index = 0; index < Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++)
+		for (int index = 0; index < QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++)
 		{
 			final TableRow choice = new TableRow(this);
 			choice.setId(index);
 			TextView choiceText = new TextView(this);
 			choiceText.setGravity(Gravity.CENTER);
 			choiceText.setTextSize(24);
-			choiceText.setText(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
+			choiceText.setText(QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices()[index]);
 			choice.addView(choiceText);
 			choice.setGravity(Gravity.CENTER);
-			if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
-				if (index == Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
-					if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+			if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
+				if (index == QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
+					if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
 						choice.setBackgroundColor(Color.GREEN);
 					} else {
 						choice.setBackgroundColor(Color.YELLOW);
 					}
-				} else if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+				} else if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
 					choice.setBackgroundColor(Color.RED);
 				}
 			}
@@ -53,11 +52,11 @@ public class AnsweringActivity extends AppCompatActivity
 			{
 				public void onClick(View view)
 				{
-					if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt() < 0)
+					if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt() < 0)
 					{
 						final int choiceIndex = view.getId();
 						view.setBackgroundColor(Color.YELLOW);
-						Categories.getInstance().answer(categoryIndex,questionIndex,choiceIndex,points);
+						QuickQuiz.getInstance().answer(categoryIndex,questionIndex,choiceIndex,points);
 						handler.removeCallbacksAndMessages(null);
 						handler.postDelayed(new Runnable()
 						{
@@ -87,8 +86,8 @@ public class AnsweringActivity extends AppCompatActivity
 			@Override
 			public void run()
 			{
-				countdownTextView.setText(Integer.toString(Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getTimeLeft()));
-				if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].decrementTimeLeft())
+				countdownTextView.setText(Integer.toString(QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getTimeLeft()));
+				if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].decrementTimeLeft())
 				{
 					handler.postDelayed(this, 1000);
 				}
@@ -115,16 +114,16 @@ public class AnsweringActivity extends AppCompatActivity
 
 	public void updateColor(int categoryIndex, int questionIndex)
 	{
-		for (int index = 0; index < Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++) {
+		for (int index = 0; index < QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getChoices().length; index++) {
 			TableRow choice = (TableRow) findViewById(index);
-			if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
-				if (index == Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
-					if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
+			if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAttempted()) {
+				if (index == QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getAttempt()) {
+					if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].isAnswered()) {
 						choice.setBackgroundColor(Color.GREEN);
 					} else {
 						choice.setBackgroundColor(Color.YELLOW);
 					}
-				} else if (Categories.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
+				} else if (QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[questionIndex].getRightAnswerIndex() == index) {
 					choice.setBackgroundColor(Color.RED);
 				}
 			}

@@ -85,7 +85,7 @@ public class Question
 		if (index == getRightAnswerIndex())
 		{
 			answered = true;
-			User.getInstance().awardPoints(points);
+			QuickQuiz.getInstance().awardPoints(points);
 			return true;
 		}
 		return false;

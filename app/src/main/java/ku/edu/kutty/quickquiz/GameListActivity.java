@@ -5,6 +5,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -31,7 +33,7 @@ public class GameListActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_list);
 		// XML
-		if (Categories.getInstance() == null) {
+		if (QuickQuiz.getInstance() == null) {
 			try {
 				ArrayList<Question> questions;
 				ArrayList<Category> categories;
@@ -60,7 +62,7 @@ public class GameListActivity extends AppCompatActivity
 					}
 				}
 				this.categories = categories.toArray(new Category[categories.size()]);
-				Categories.initialize(this.categories);
+				QuickQuiz.initialize(this.categories);
 			} catch (IOException e) {
 				e.printStackTrace();
 				Log.d("Error: ", e.toString());
@@ -78,7 +80,7 @@ public class GameListActivity extends AppCompatActivity
 		}
 		else
 		{
-			categories = Categories.getInstance().getCategories();
+			categories = QuickQuiz.getInstance().getCategories();
 		}
 		
 		GameListFragment gameList = new GameListFragment();
@@ -131,10 +133,10 @@ public class GameListActivity extends AppCompatActivity
 	
 	private boolean checkForWin()
 	{
-		for (int categoryIndex = 0; categoryIndex < Categories.getInstance().getCategories().length; categoryIndex++)
+		for (int categoryIndex = 0; categoryIndex < QuickQuiz.getInstance().getCategories().length; categoryIndex++)
 		{
-			if (Categories.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex() !=
-					Categories.getInstance().getCategories()[categoryIndex].getQuestions().length)
+			if (QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex() !=
+					QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions().length)
 			{
 				return false;
 			}
@@ -144,11 +146,11 @@ public class GameListActivity extends AppCompatActivity
 	
 	private boolean checkForLoss()
 	{
-		for (int categoryIndex = 0; categoryIndex < Categories.getInstance().getCategories().length; categoryIndex++)
+		for (int categoryIndex = 0; categoryIndex < QuickQuiz.getInstance().getCategories().length; categoryIndex++)
 		{
-			int maxAllowed = Categories.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex();
-			if (maxAllowed == Categories.getInstance().getCategories()[categoryIndex].getQuestions().length ||
-					!Categories.getInstance().getCategories()[categoryIndex].getQuestions()[maxAllowed].isAttempted())
+			int maxAllowed = QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex();
+			if (maxAllowed == QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions().length ||
+					!QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[maxAllowed].isAttempted())
 			{
 				return false;
 			}
@@ -173,4 +175,20 @@ public class GameListActivity extends AppCompatActivity
 		}
 	}
 	
+	View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
+	{
+		return new View.OnClickListener()
+		{
+			public void onClick(View view)
+			{
+				if (questionIndex <= QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex()) {
+					Intent answerIntent = new Intent(GameListActivity.this, AnsweringActivity.class);
+					answerIntent.putExtra("category", categoryIndex);
+					answerIntent.putExtra("question", questionIndex);
+					answerIntent.putExtra("points", 100 * (questionIndex + 1));
+					startActivity(answerIntent);
+				}
+			}
+		};
+	}
 }

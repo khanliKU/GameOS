@@ -31,7 +31,7 @@ public class GameOverActivity extends AppCompatActivity {
 			statusTextView.setText("Game Over!");
 			statusTextView.setTextColor(Color.RED);
 		}
-		scoreTextView.setText("Your score:\n" + User.getInstance().getScore());
+		scoreTextView.setText("Your score:\n" + QuickQuiz.getInstance().getScore());
 		nicknameTextView.setText(User.getInstance().getNickname());
 
 		Button restartButton = (Button) findViewById(R.id.restartButton);
@@ -41,7 +41,7 @@ public class GameOverActivity extends AppCompatActivity {
 			public void onClick(View v)
 			{
 				User.reset();
-				Categories.reset();
+				QuickQuiz.reset();
 				Intent restartIntent = new Intent(GameOverActivity.this ,LoginActivity.class);
 				startActivity(restartIntent);
 				finish();
