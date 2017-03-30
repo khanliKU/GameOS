@@ -1,6 +1,7 @@
 package ku.edu.kutty.quickquiz;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ import android.widget.TextView;
  * Use the {@link QuestionSelectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class QuestionSelectionFragment extends Fragment
+public class QuestionSelectionFragment extends Fragment implements View.OnClickListener
 {
 	GameListActivity parentView;
 	// TODO: Rename parameter arguments, choose names that match
@@ -107,6 +108,13 @@ public class QuestionSelectionFragment extends Fragment
 		super.onDetach();
 	}
 	
+	@Override
+	public void onClick(View v)
+	{
+		int[] buttonIndex = (int[]) v.getTag();
+		parentView.selectQuestion(buttonIndex[0],buttonIndex[1]);
+	}
+	
 	/**
 	 * This interface must be implemented by activities that contain this
 	 * fragment to allow an interaction in this fragment to be communicated
@@ -152,8 +160,11 @@ public class QuestionSelectionFragment extends Fragment
 				buttonParams.topMargin = 5;
 				buttonParams.bottomMargin = 5;
 				Button questionButton = new Button(parentView);
+				int[] buttonIndex = {i,j};
+				//questionButton.setId(i);
+				questionButton.setTag(buttonIndex);
 				questionButton.setText(Integer.toString((j+1)*100));
-				questionButton.setOnClickListener(parentView.myOnClick(questionButton,i,j));
+				questionButton.setOnClickListener(this);
 				questionButton.setBackgroundColor(Color.GRAY);
 				questionButton.setLayoutParams(buttonParams);
 				categoryLayout[i].addView(questionButton);

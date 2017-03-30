@@ -60,12 +60,16 @@ public class QuestionSelectionActivity extends AppCompatActivity
         {
             public void onClick(View view)
             {
-				if (questionIndex <= QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex()) {
+				if (questionIndex <= QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex())
+				{
+					
+					/*
 					Intent answerIntent = new Intent(QuestionSelectionActivity.this, AnsweringActivity.class);
 					answerIntent.putExtra("category", categoryIndex);
 					answerIntent.putExtra("question", questionIndex);
 					answerIntent.putExtra("points", 100 * (questionIndex + 1));
 					startActivity(answerIntent);
+					*/
 				}
             }
         };

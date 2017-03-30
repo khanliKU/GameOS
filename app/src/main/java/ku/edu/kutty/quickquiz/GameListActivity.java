@@ -2,7 +2,10 @@ package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -83,19 +86,20 @@ public class GameListActivity extends AppCompatActivity
 			categories = QuickQuiz.getInstance().getCategories();
 		}
 		
+		QuestionSelectionFragment qs = new QuestionSelectionFragment();
 		GameListFragment gameList = new GameListFragment();
-		getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,gameList).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs).commit();
 		
 		if (findViewById(R.id.game_frame) != null)
 		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			onTablet = true;
-			QuestionSelectionFragment qs = new QuestionSelectionFragment();
+			//QuestionSelectionFragment qs = new QuestionSelectionFragment();
 			getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs).commit();
 		}
 		else
 		{
-			
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
 	}
 	
@@ -174,7 +178,7 @@ public class GameListActivity extends AppCompatActivity
 			finish();
 		}
 	}
-	
+	/*
 	View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
 	{
 		return new View.OnClickListener()
@@ -190,5 +194,30 @@ public class GameListActivity extends AppCompatActivity
 				}
 			}
 		};
+	}
+	*/
+	
+	public void selectQuestion(int categoryIndex, int questionIndex)
+	{
+		if (questionIndex <= QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex())
+		{
+			if (onTablet)
+			{
+				Fragment answeringFragment = new AnsweringFragment();
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, answeringFragment).commit();
+			}
+			else
+			{
+				Fragment answeringFragment = new AnsweringFragment();
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, answeringFragment).commit();
+			}
+			/*
+			Intent answerIntent = new Intent(GameListActivity.this, AnsweringActivity.class);
+			answerIntent.putExtra("category", categoryIndex);
+			answerIntent.putExtra("question", questionIndex);
+			answerIntent.putExtra("points", 100 * (questionIndex + 1));
+			startActivity(answerIntent);
+			*/
+		}
 	}
 }
