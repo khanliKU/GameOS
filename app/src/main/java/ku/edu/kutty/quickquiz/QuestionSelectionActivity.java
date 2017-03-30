@@ -26,7 +26,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 
-public class QuestionSelection extends AppCompatActivity
+public class QuestionSelectionActivity extends AppCompatActivity
 {
 
     Category[] categories;
@@ -38,7 +38,7 @@ public class QuestionSelection extends AppCompatActivity
         setContentView(R.layout.activity_question_selection);
 		TextView nicknameTextView = (TextView) findViewById(R.id.nickname);
 		nicknameTextView.setText(User.getInstance().getNickname());
-    // XML
+    	// XML
 		if (Categories.getInstance() == null) {
 			try {
 				ArrayList<Question> questions;
@@ -170,7 +170,7 @@ public class QuestionSelection extends AppCompatActivity
             public void onClick(View view)
             {
 				if (questionIndex <= Categories.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex()) {
-					Intent answerIntent = new Intent(QuestionSelection.this, AnsweringActivity.class);
+					Intent answerIntent = new Intent(QuestionSelectionActivity.this, AnsweringActivity.class);
 					answerIntent.putExtra("category", categoryIndex);
 					answerIntent.putExtra("question", questionIndex);
 					answerIntent.putExtra("points", 100 * (questionIndex + 1));
@@ -241,7 +241,7 @@ public class QuestionSelection extends AppCompatActivity
 
 	private void checkEndGame()
 	{
-		Intent gameOverIntent = new Intent(QuestionSelection.this, GameOverActivity.class);
+		Intent gameOverIntent = new Intent(QuestionSelectionActivity.this, GameOverActivity.class);
 		if (checkForLoss())
 		{
 			gameOverIntent.putExtra("won",false);
