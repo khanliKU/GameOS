@@ -100,7 +100,7 @@ public class GameListActivity extends AppCompatActivity
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			onTablet = true;
 			//getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs).commit();
-			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,gameList).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,gameList,"game_list_fragment").commit();
 		}
 		else
 		{
@@ -214,11 +214,11 @@ public class GameListActivity extends AppCompatActivity
 			answeringFragment.setArguments(bundle);
 			if (onTablet)
 			{
-				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, answeringFragment).commit();
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, answeringFragment,"answering_fragment").commit();
 			}
 			else
 			{
-				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, answeringFragment).commit();
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, answeringFragment,"answering_fragment").commit();
 			}
 		}
 	}
@@ -228,11 +228,34 @@ public class GameListActivity extends AppCompatActivity
 		QuestionSelectionFragment qs = new QuestionSelectionFragment();
 		if (onTablet)
 		{
-			getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs,"question_selection_fragment").commit();
 		}
 		else
 		{
-			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs,"question_selection_fragment").commit();
+		}
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if (onTablet)
+		{
+			if (getSupportFragmentManager().findFragmentByTag("answering_fragment") != null)
+			{
+				viewCategories();
+			}
+			else if (getSupportFragmentManager().findFragmentByTag("question_selection_fragment") != null)
+			{
+				
+			}
+		}
+		else
+		{
+			if (getSupportFragmentManager().findFragmentByTag("answering_fragment") != null)
+			{
+				viewCategories();
+			}
 		}
 	}
 }
