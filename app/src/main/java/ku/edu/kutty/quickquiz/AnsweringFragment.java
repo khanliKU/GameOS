@@ -1,7 +1,6 @@
 package ku.edu.kutty.quickquiz;
 
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -97,7 +96,7 @@ public class AnsweringFragment extends Fragment implements View.OnClickListener
 							@Override
 							public void run()
 							{
-								GameListActivity parent = (GameListActivity) getActivity();
+								MainActivity parent = (MainActivity) getActivity();
 								parent.viewCategories();
 							}
 						}, 3000);
@@ -120,7 +119,7 @@ public class AnsweringFragment extends Fragment implements View.OnClickListener
 				}
 				else
 				{
-					GameListActivity parent = (GameListActivity) getActivity();
+					MainActivity parent = (MainActivity) getActivity();
 					parent.viewCategories();
 				}
 			}

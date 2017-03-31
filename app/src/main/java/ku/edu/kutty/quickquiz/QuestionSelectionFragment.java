@@ -1,7 +1,5 @@
 package ku.edu.kutty.quickquiz;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +25,7 @@ import android.widget.TextView;
  */
 public class QuestionSelectionFragment extends Fragment implements View.OnClickListener
 {
-	GameListActivity parentView;
+	MainActivity parentView;
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -87,7 +85,7 @@ public class QuestionSelectionFragment extends Fragment implements View.OnClickL
 	{
 		Log.d("\nState: ","entered onViewCreated\n");
 		super.onViewCreated(view, savedInstanceState);
-		parentView = (GameListActivity) getActivity();
+		parentView = (MainActivity) getActivity();
 		Log.d("\nState: ","parent set\n");
 		createUI();
 		Log.d("\nState: ","created UI\n");

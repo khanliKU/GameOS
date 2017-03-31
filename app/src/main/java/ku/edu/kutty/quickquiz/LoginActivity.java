@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void performSeque()
     {
-        Intent intent = new Intent(LoginActivity.this, GameListActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

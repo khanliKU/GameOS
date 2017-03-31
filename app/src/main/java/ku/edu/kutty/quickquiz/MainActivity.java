@@ -2,15 +2,10 @@ package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,7 +21,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class GameListActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
 {
 	Category[] categories;
 	private boolean onTablet = false;
@@ -35,10 +30,7 @@ public class GameListActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game_list);
-		
-//		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//		setSupportActionBar(toolbar);
+		setContentView(R.layout.activity_main);
 		
 		// XML
 		if (QuickQuiz.getInstance() == null) {
@@ -169,21 +161,28 @@ public class GameListActivity extends AppCompatActivity
 		return true;
 	}
 	
-	private void checkEndGame()
+	private boolean checkEndGame()
 	{
-		Intent gameOverIntent = new Intent(GameListActivity.this, GameOverActivity.class);
+		boolean won = false;
+		boolean lost = false;
+		Bundle bundle = new Bundle();
+		GameOverFragment gameOverFragment = new GameOverFragment();
 		if (checkForLoss())
 		{
-			gameOverIntent.putExtra("won",false);
-			startActivity(gameOverIntent);
-			finish();
+			lost = true;
+			bundle.putBoolean("won",false);
 		}
 		else if (checkForWin())
 		{
-			gameOverIntent.putExtra("won",true);
-			startActivity(gameOverIntent);
-			finish();
+			won = true;
+			bundle.putBoolean("won",true);
 		}
+		if (won || lost) {
+			gameOverFragment.setArguments(bundle);
+			putFragment(gameOverFragment, "game_over_fragment");
+			return true;
+		}
+		return false;
 	}
 	/*
 	View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
@@ -225,14 +224,14 @@ public class GameListActivity extends AppCompatActivity
 	
 	public void viewCategories()
 	{
-		QuestionSelectionFragment qs = new QuestionSelectionFragment();
-		if (onTablet)
-		{
-			getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs,"question_selection_fragment").commit();
-		}
-		else
-		{
-			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs,"question_selection_fragment").commit();
+		if (!checkEndGame()) {
+			QuestionSelectionFragment qs = new QuestionSelectionFragment();
+			if (onTablet) {
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, qs, "question_selection_fragment").commit();
+			}
+			else {
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, qs, "question_selection_fragment").commit();
+			}
 		}
 	}
 	
@@ -256,6 +255,18 @@ public class GameListActivity extends AppCompatActivity
 			{
 				viewCategories();
 			}
+		}
+	}
+	
+	private void putFragment(Fragment fragment, String tag)
+	{
+		if (onTablet)
+		{
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, fragment,tag).commit();
+		}
+		else
+		{
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, fragment,tag).commit();
 		}
 	}
 }
