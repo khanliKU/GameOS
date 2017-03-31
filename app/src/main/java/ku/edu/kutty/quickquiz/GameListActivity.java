@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,10 @@ public class GameListActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_list);
+		
+//		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//		setSupportActionBar(toolbar);
+		
 		// XML
 		if (QuickQuiz.getInstance() == null) {
 			try {
@@ -86,21 +91,23 @@ public class GameListActivity extends AppCompatActivity
 			categories = QuickQuiz.getInstance().getCategories();
 		}
 		
-		QuestionSelectionFragment qs = new QuestionSelectionFragment();
+		//QuestionSelectionFragment qs = new QuestionSelectionFragment();
 		GameListFragment gameList = new GameListFragment();
-		getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs).commit();
 		
+		// TODO: Fix initial views here, it is set this way to skip login for now
 		if (findViewById(R.id.game_frame) != null)
 		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			onTablet = true;
-			//QuestionSelectionFragment qs = new QuestionSelectionFragment();
-			getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs).commit();
+			//getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,gameList).commit();
 		}
 		else
 		{
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			//getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs).commit();
 		}
+		viewCategories();
 	}
 	
 	private Question createQuestion(Element questionElement)
@@ -197,27 +204,35 @@ public class GameListActivity extends AppCompatActivity
 	}
 	*/
 	
-	public void selectQuestion(int categoryIndex, int questionIndex)
+	public void selectQuestion(int[] index)
 	{
-		if (questionIndex <= QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex())
+		if (index[1] <= QuickQuiz.getInstance().getCategories()[index[0]].getMaxAllowedIndex())
 		{
+			Bundle bundle = new Bundle();
+			bundle.putIntArray("index",index);
+			Fragment answeringFragment = new AnsweringFragment();
+			answeringFragment.setArguments(bundle);
 			if (onTablet)
 			{
-				Fragment answeringFragment = new AnsweringFragment();
 				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, answeringFragment).commit();
 			}
 			else
 			{
-				Fragment answeringFragment = new AnsweringFragment();
 				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, answeringFragment).commit();
 			}
-			/*
-			Intent answerIntent = new Intent(GameListActivity.this, AnsweringActivity.class);
-			answerIntent.putExtra("category", categoryIndex);
-			answerIntent.putExtra("question", questionIndex);
-			answerIntent.putExtra("points", 100 * (questionIndex + 1));
-			startActivity(answerIntent);
-			*/
+		}
+	}
+	
+	public void viewCategories()
+	{
+		QuestionSelectionFragment qs = new QuestionSelectionFragment();
+		if (onTablet)
+		{
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs).commit();
+		}
+		else
+		{
+			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs).commit();
 		}
 	}
 }

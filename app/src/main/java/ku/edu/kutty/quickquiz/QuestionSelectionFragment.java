@@ -111,8 +111,11 @@ public class QuestionSelectionFragment extends Fragment implements View.OnClickL
 	@Override
 	public void onClick(View v)
 	{
-		int[] buttonIndex = (int[]) v.getTag();
-		parentView.selectQuestion(buttonIndex[0],buttonIndex[1]);
+		if (v.getTag() instanceof int[])
+		{
+			parentView.selectQuestion((int[]) v.getTag());
+		}
+		
 	}
 	
 	/**
