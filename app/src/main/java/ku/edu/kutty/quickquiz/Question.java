@@ -78,11 +78,11 @@ public class Question
         return choices;
     }
 
-    public boolean answer(int index, int points)
+    public boolean answer(int choice, int points)
     {
 		this.attempted = true;
-		this.attempt = index;
-		if (index == getRightAnswerIndex())
+		this.attempt = choice;
+		if (choice == getRightAnswerIndex())
 		{
 			answered = true;
 			QuickQuiz.getInstance().awardPoints(points);

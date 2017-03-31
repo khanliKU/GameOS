@@ -32,58 +32,6 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		// XML
-		if (QuickQuiz.getInstance() == null) {
-			try {
-				ArrayList<Question> questions;
-				ArrayList<Category> categories;
-				InputStream is = getAssets().open("data.xml");
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(is);
-				Element element = doc.getDocumentElement();
-				element.normalize();
-				NodeList categoryList = doc.getElementsByTagName("Category");
-				categories = new ArrayList<Category>();
-				for (int i = 0; i < categoryList.getLength(); i++) {
-					Node categoryNode = categoryList.item(i);
-					if (categoryNode.getNodeType() == Node.ELEMENT_NODE) {
-						Element categoryElement = (Element) categoryNode;
-						NodeList questionList = categoryElement.getElementsByTagName("Question");
-						questions = new ArrayList<Question>();
-						for (int j = 0; j < questionList.getLength(); j++) {
-							Node questionNode = questionList.item(j);
-							if (questionNode.getNodeType() == Node.ELEMENT_NODE) {
-								Element questionElement = (Element) questionNode;
-								questions.add(createQuestion(questionElement));
-							}
-						}
-						categories.add(new Category(getSingleValue("name", categoryElement), questions.toArray(new Question[questions.size()])));
-					}
-				}
-				this.categories = categories.toArray(new Category[categories.size()]);
-				QuickQuiz.initialize(this.categories);
-			} catch (IOException e) {
-				e.printStackTrace();
-				Log.d("Error: ", e.toString());
-			}
-			catch (ParserConfigurationException e)
-			{
-				e.printStackTrace();
-				Log.d("Error: ", e.toString());
-			}
-			catch (SAXException e)
-			{
-				e.printStackTrace();
-				Log.d("Error: ", e.toString());
-			}
-		}
-		else
-		{
-			categories = QuickQuiz.getInstance().getCategories();
-		}
-		
-		//QuestionSelectionFragment qs = new QuestionSelectionFragment();
 		GameListFragment gameList = new GameListFragment();
 		
 		// TODO: Fix initial views here, it is set this way to skip login for now
@@ -91,117 +39,15 @@ public class MainActivity extends AppCompatActivity
 		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			onTablet = true;
-			//getSupportFragmentManager().beginTransaction().replace(R.id.game_frame,qs).commit();
+			
 			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,gameList,"game_list_fragment").commit();
 		}
 		else
 		{
-			//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			//getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,qs).commit();
+			
 		}
 		viewCategories();
 	}
-	
-	private Question createQuestion(Element questionElement)
-	{
-		Question result;
-		String text, answer;
-		String[] choices;
-		text = getSingleValue("text",questionElement);
-		answer = getSingleValue("answer",questionElement);
-		choices = getMultipleValue("choice",questionElement);
-		choices[3] = answer;
-		result = new Question(text,answer,choices);
-		return result;
-	}
-	
-	private String getSingleValue(String tag, Element element)
-	{
-		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-		Node node = nodeList.item(0);
-		return node.getNodeValue();
-	}
-	
-	private String[] getMultipleValue(String tag, Element element)
-	{
-		String[] result;
-		NodeList nodeList = element.getElementsByTagName(tag);
-		result = new String[nodeList.getLength() + 1];
-		for (int i = 0; i < nodeList.getLength(); i++)
-		{
-			result[i] = nodeList.item(i).getTextContent();
-		}
-		return result;
-	}
-	
-	private boolean checkForWin()
-	{
-		for (int categoryIndex = 0; categoryIndex < QuickQuiz.getInstance().getCategories().length; categoryIndex++)
-		{
-			if (QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex() !=
-					QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions().length)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean checkForLoss()
-	{
-		for (int categoryIndex = 0; categoryIndex < QuickQuiz.getInstance().getCategories().length; categoryIndex++)
-		{
-			int maxAllowed = QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex();
-			if (maxAllowed == QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions().length ||
-					!QuickQuiz.getInstance().getCategories()[categoryIndex].getQuestions()[maxAllowed].isAttempted())
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean checkEndGame()
-	{
-		boolean won = false;
-		boolean lost = false;
-		Bundle bundle = new Bundle();
-		GameOverFragment gameOverFragment = new GameOverFragment();
-		if (checkForLoss())
-		{
-			lost = true;
-			bundle.putBoolean("won",false);
-		}
-		else if (checkForWin())
-		{
-			won = true;
-			bundle.putBoolean("won",true);
-		}
-		if (won || lost) {
-			gameOverFragment.setArguments(bundle);
-			putFragment(gameOverFragment, "game_over_fragment");
-			return true;
-		}
-		return false;
-	}
-	/*
-	View.OnClickListener myOnClick(final Button button, final int categoryIndex, final int questionIndex)
-	{
-		return new View.OnClickListener()
-		{
-			public void onClick(View view)
-			{
-				if (questionIndex <= QuickQuiz.getInstance().getCategories()[categoryIndex].getMaxAllowedIndex()) {
-					Intent answerIntent = new Intent(GameListActivity.this, AnsweringActivity.class);
-					answerIntent.putExtra("category", categoryIndex);
-					answerIntent.putExtra("question", questionIndex);
-					answerIntent.putExtra("points", 100 * (questionIndex + 1));
-					startActivity(answerIntent);
-				}
-			}
-		};
-	}
-	*/
 	
 	public void selectQuestion(int[] index)
 	{
@@ -233,6 +79,30 @@ public class MainActivity extends AppCompatActivity
 				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, qs, "question_selection_fragment").commit();
 			}
 		}
+	}
+	
+	private boolean checkEndGame()
+	{
+		boolean won = false;
+		boolean lost = false;
+		Bundle bundle = new Bundle();
+		GameOverFragment gameOverFragment = new GameOverFragment();
+		if (QuickQuiz.checkForLoss())
+		{
+			lost = true;
+			bundle.putBoolean("won",false);
+		}
+		else if (QuickQuiz.checkForWin())
+		{
+			won = true;
+			bundle.putBoolean("won",true);
+		}
+		if (won || lost) {
+			gameOverFragment.setArguments(bundle);
+			putFragment(gameOverFragment, "game_over_fragment");
+			return true;
+		}
+		return false;
 	}
 	
 	@Override

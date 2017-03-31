@@ -64,17 +64,10 @@ public class GameOverFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				User.reset();
+			//	User.reset();
 				QuickQuiz.reset();
 				MainActivity parent = (MainActivity) getActivity();
 				parent.viewCategories();
-				/*
-				User.reset();
-				QuickQuiz.reset();
-				Intent restartIntent = new Intent(GameOverActivity.this ,LoginActivity.class);
-				startActivity(restartIntent);
-				finish();
-				*/
 			}
 		});
 	}

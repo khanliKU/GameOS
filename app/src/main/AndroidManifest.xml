@@ -16,9 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".QuestionSelectionActivity"/>
-        <activity android:name=".AnsweringActivity"/>
-        <activity android:name=".GameOverActivity" />
         <activity android:name=".LoginActivity" />
     </application>
 
