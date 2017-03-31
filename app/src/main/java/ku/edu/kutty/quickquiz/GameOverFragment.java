@@ -1,9 +1,6 @@
 package ku.edu.kutty.quickquiz;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -56,7 +53,7 @@ public class GameOverFragment extends Fragment
 			statusTextView.setTextColor(Color.RED);
 		}
 		scoreTextView.setText("Your score:\n" + QuickQuiz.getInstance().getScore());
-//		nicknameTextView.setText(User.getInstance().getNickname());
+		nicknameTextView.setText(User.getInstance().getNickname());
 		
 		Button restartButton = (Button) getActivity().findViewById(R.id.restartButton);
 		restartButton.setOnClickListener(new View.OnClickListener()

@@ -14,10 +14,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class AnsweringFragment extends Fragment implements View.OnClickListener
 {
 	

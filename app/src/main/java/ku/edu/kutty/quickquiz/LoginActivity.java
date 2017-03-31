@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (User.getInstance() != null)
         {
-            performSeque();
+            performSegue();
         }
 
         // initialize UI elements
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
                     User.initialize(nickname);
                     if (nickname.length() > 0)
                     {
-                        performSeque();
+                        performSegue();
                     }
                 }
                 return false;
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void performSeque()
+    private void performSegue()
     {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);

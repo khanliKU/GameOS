@@ -1,7 +1,6 @@
 package ku.edu.kutty.quickquiz;
 
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,61 +13,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link QuestionSelectionFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link QuestionSelectionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class QuestionSelectionFragment extends Fragment implements View.OnClickListener
 {
 	MainActivity parentView;
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
-	
-	// TODO: Rename and change types of parameters
-	private String mParam1;
-	private String mParam2;
-	
-	private OnFragmentInteractionListener mListener;
-	
-	public QuestionSelectionFragment()
-	{
-		// Required empty public constructor
-	}
-	
-	/**
-	 * Use this factory method to create a new instance of
-	 * this fragment using the provided parameters.
-	 *
-	 * @param param1 Parameter 1.
-	 * @param param2 Parameter 2.
-	 * @return A new instance of fragment QuestionSelectionFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
-	public static QuestionSelectionFragment newInstance(String param1, String param2)
-	{
-		QuestionSelectionFragment fragment = new QuestionSelectionFragment();
-		Bundle args = new Bundle();
-		args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);
-		fragment.setArguments(args);
-		return fragment;
-	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
 	}
 	
 	@Override
@@ -93,13 +45,6 @@ public class QuestionSelectionFragment extends Fragment implements View.OnClickL
 		Log.d("\nState: ","updated UI\n");
 	}
 	
-	// TODO: Rename method, update argument and hook method into UI event
-	public void onButtonPressed(Uri uri)
-	{
-		if (mListener != null) {
-			mListener.onFragmentInteraction(uri);
-		}
-	}
 	@Override
 	public void onDetach()
 	{
@@ -114,22 +59,6 @@ public class QuestionSelectionFragment extends Fragment implements View.OnClickL
 			parentView.selectQuestion((int[]) v.getTag());
 		}
 		
-	}
-	
-	/**
-	 * This interface must be implemented by activities that contain this
-	 * fragment to allow an interaction in this fragment to be communicated
-	 * to the activity and potentially other fragments contained in that
-	 * activity.
-	 * <p>
-	 * See the Android Training lesson <a href=
-	 * "http://developer.android.com/training/basics/fragments/communicating.html"
-	 * >Communicating with Other Fragments</a> for more information.
-	 */
-	public interface OnFragmentInteractionListener
-	{
-		// TODO: Update argument type and name
-		void onFragmentInteraction(Uri uri);
 	}
 	
 	void createUI()
@@ -162,7 +91,6 @@ public class QuestionSelectionFragment extends Fragment implements View.OnClickL
 				buttonParams.bottomMargin = 5;
 				Button questionButton = new Button(parentView);
 				int[] buttonIndex = {i,j};
-				//questionButton.setId(i);
 				questionButton.setTag(buttonIndex);
 				questionButton.setText(Integer.toString((j+1)*100));
 				questionButton.setOnClickListener(this);
@@ -176,8 +104,10 @@ public class QuestionSelectionFragment extends Fragment implements View.OnClickL
 	
 	private void updateUI()
 	{
+		TextView nicknameTextView = (TextView) parentView.findViewById(R.id.nickname);
 		TextView scoreTextView = (TextView) parentView.findViewById(R.id.score);
 		scoreTextView.setText("Score: " + QuickQuiz.getInstance().getScore());
+		nicknameTextView.setText(User.getInstance().getNickname());
 		LinearLayout parent = (LinearLayout) parentView.findViewById(R.id.parentLayout);
 		for (int i = 0; i < QuickQuiz.getInstance().getCategories().length; i++)
 		{

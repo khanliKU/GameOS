@@ -23,7 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class MainActivity extends AppCompatActivity
 {
-	Category[] categories;
+	
 	private boolean onTablet = false;
 	
 	@Override
