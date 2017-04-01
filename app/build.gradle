@@ -4,7 +4,7 @@ android {
     compileSdkVersion 22
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "ku.edu.kutty.quickquiz"
+        applicationId "ku.edu.kutty.gameos"
         minSdkVersion 21
         targetSdkVersion 22
         versionCode 1

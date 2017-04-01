@@ -1,4 +1,4 @@
-package ku.edu.kutty.quickquiz;
+package ku.edu.kutty.gameos;
 
 /**
  * Created by kutty on 28/02/2017.

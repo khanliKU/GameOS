@@ -3,7 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="ku.edu.kutty.quickquiz.GameListFragment">
+             tools:context="ku.edu.kutty.gameos.GameListFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

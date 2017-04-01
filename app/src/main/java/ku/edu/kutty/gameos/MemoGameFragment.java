@@ -1,4 +1,4 @@
-package ku.edu.kutty.quickquiz;
+package ku.edu.kutty.gameos;
 
 import android.os.Bundle;
 import android.os.Handler;

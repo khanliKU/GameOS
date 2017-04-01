@@ -1,4 +1,4 @@
-package ku.edu.kutty.quickquiz;
+package ku.edu.kutty.gameos;
 
 import android.graphics.Color;
 import android.os.Bundle;

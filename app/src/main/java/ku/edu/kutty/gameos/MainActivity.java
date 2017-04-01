@@ -1,4 +1,4 @@
-package ku.edu.kutty.quickquiz;
+package ku.edu.kutty.gameos;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;

@@ -1,4 +1,4 @@
-package ku.edu.kutty.quickquiz;
+package ku.edu.kutty.gameos;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;

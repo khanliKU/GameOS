@@ -1,8 +1,4 @@
-package ku.edu.kutty.quickquiz;
-
-/**
- * Created by kutty on 28/02/2017.
- */
+package ku.edu.kutty.gameos;
 
 public class Category
 {
