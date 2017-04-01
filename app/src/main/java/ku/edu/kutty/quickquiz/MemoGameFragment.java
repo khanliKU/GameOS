@@ -32,6 +32,7 @@ public class MemoGameFragment extends Fragment
 		public void run()
 		{
 			rightAnswer.setVisibility(View.INVISIBLE);
+			MemoGame.getInstance().waited();
 		}
 	};
 	//TODO: game logic
@@ -74,12 +75,13 @@ public class MemoGameFragment extends Fragment
 	public void onStart()
 	{
 		super.onStart();
+		rightAnswer.setVisibility(View.INVISIBLE);
 		updateUI();
 	}
 	
 	void updateUI()
 	{
-		if (!MemoGame.getInstance().isAttempted())
+		if (!MemoGame.getInstance().isAttempted() && MemoGame.getInstance().timeToWait != 0)
 		{
 			rightAnswer.setVisibility(View.VISIBLE);
 			myHandler.postDelayed(delay, MemoGame.getInstance().getTimeToWait() * 1000);
@@ -105,9 +107,11 @@ public class MemoGameFragment extends Fragment
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-				MemoGame.getInstance().select(position);
-				view.setBackgroundColor(Color.YELLOW);
-				updateUI();
+				if (MemoGame.getInstance().timeToWait == 0)
+				{
+					MemoGame.getInstance().select(position);
+					updateUI();
+				}
 			}
 		});
 		

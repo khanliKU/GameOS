@@ -146,6 +146,11 @@ class MemoGame
 		return timeToWait;
 	}
 	
+	void waited()
+	{
+		timeToWait = 0;
+	}
+	
 	boolean isAttempted()
 	{
 		return attempted;
