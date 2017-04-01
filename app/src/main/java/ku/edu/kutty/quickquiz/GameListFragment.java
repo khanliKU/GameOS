@@ -25,19 +25,39 @@ public class GameListFragment extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 		TableLayout tl = (TableLayout) getActivity().findViewById(R.id.game_list);
-		for (int i = 0; i < 5; i++)
+		
+		View quickQuiz = tableChild("Quick Quiz");
+		quickQuiz.setOnClickListener(new View.OnClickListener()
 		{
-			tl.addView(tableChild());
-		}
+			@Override
+			public void onClick(View v)
+			{
+				MainActivity parent = (MainActivity) getActivity();
+				parent.viewCategories();
+			}
+		});
+		View memoGame = tableChild("Memo Game");
+		memoGame.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				MainActivity parent = (MainActivity) getActivity();
+				parent.viewMemoGame();
+			}
+		});
+		
+		tl.addView(quickQuiz);
+		tl.addView(memoGame);
 	}
 	
-	private View tableChild() {
+	private View tableChild(String gameName)
+	{
 		TableRow tr = new TableRow(getActivity());
 		View v = LayoutInflater.from(getActivity()).inflate(R.layout.game_list_row, tr, false);
-		//want to get childs of row for example TextView, get it like this
 		TextView tv = (TextView)v.findViewById(R.id.game_name);
-		tv.setText("This is another awesome way for dynamic custom layouts.");
-		return v;//have to return View child, so return made 'v'
+		tv.setText(gameName);
+		return v;
 	}
 	
 	@Override

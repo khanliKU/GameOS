@@ -2,9 +2,11 @@
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="?android:attr/listPreferredItemHeight">
+
     <TextView
         android:id="@+id/game_name"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_height="fill_parent"
+        android:textSize="36sp"/>
 
 </TableRow>

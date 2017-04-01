@@ -23,15 +23,14 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		GameListFragment gameList = new GameListFragment();
+		getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, new GameListFragment(),"game_list_fragment").commit();
 		
 		// TODO: Fix initial views here, it is set this way to skip login for now
 		if (findViewById(R.id.game_frame) != null)
 		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			onTablet = true;
-			
-			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame,gameList,"game_list_fragment").commit();
+			viewCategories();
 		}
 		else
 		{
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity
 		{
 			e.printStackTrace();
 		}
-		viewCategories();
 	}
 	
 	public void selectQuestion(int[] index)
@@ -134,6 +132,10 @@ public class MainActivity extends AppCompatActivity
 			if (getSupportFragmentManager().findFragmentByTag("answering_fragment") != null)
 			{
 				viewCategories();
+			} else if (getSupportFragmentManager().findFragmentByTag("memo_game_fragment") != null ||
+					getSupportFragmentManager().findFragmentByTag("question_selection_fragment") != null)
+			{
+				putFragment(new GameListFragment(), "game_list_fragmnet");
 			}
 		}
 	}
@@ -148,5 +150,10 @@ public class MainActivity extends AppCompatActivity
 		{
 			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, fragment,tag).commit();
 		}
+	}
+	
+	public void viewMemoGame()
+	{
+		putFragment(new MemoGameFragment(),"memo_game_fragment");
 	}
 }
