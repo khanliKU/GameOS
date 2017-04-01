@@ -22,7 +22,7 @@ public class Question
         this.questionText = questionText;
         this.rightAnswer = rightAnswer;
         this.choices = choices;
-        shuffleArray(choices);
+        Utils.shuffleArray(choices);
     }
 
 	public int getTimeLeft() {
@@ -105,19 +105,5 @@ public class Question
             result += choices[i] + "\n";
         }
         return result;
-    }
-
-    // Implementing Fisher–Yates shuffle
-    static <T> void shuffleArray(T[] ar)
-    {
-        Random rnd = ThreadLocalRandom.current();
-        for (int i = ar.length - 1; i > 0; i--)
-        {
-            int index = rnd.nextInt(i + 1);
-            // Simple swap
-            T a = ar[index];
-            ar[index] = ar[i];
-            ar[i] = a;
-        }
     }
 }

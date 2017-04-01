@@ -14,7 +14,7 @@ public class Category
     {
         this.name = name;
         this.questions = questions;
-        Question.shuffleArray(this.questions);
+        Utils.shuffleArray(this.questions);
     }
 
     public int getMaxAllowedIndex() {

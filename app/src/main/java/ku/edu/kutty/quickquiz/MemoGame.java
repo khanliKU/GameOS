@@ -8,7 +8,7 @@ class MemoGame
 	private int score;
 	private Flag[] flags;
 	private int level = 0;
-	private int lives = 3;
+	private int lives = 4;
 	
 	private MemoGame(Flag[] flags)
 	{
@@ -55,17 +55,14 @@ class MemoGame
 		return flags;
 	}
 	
-	Flag[][] getRandomFlags()
+	Flag[] getRandomFlags()
 	{
 		int toRemember = level + 4;
 		Random random = new Random();
-		Flag[][] flags = new Flag[toRemember][toRemember];
-		for (int row = 0; row < toRemember ; row++)
+		Flag[] flags = new Flag[toRemember * toRemember];
+		for (int i = 0; i < flags.length ; i++)
 		{
-			for (int column = 0; column < toRemember ; column++)
-			{
-				flags[row][column] = this.flags[random.nextInt(this.flags.length)];
-			}
+				flags[i] = this.flags[random.nextInt(this.flags.length)];
 		}
 		return flags;
 	}
