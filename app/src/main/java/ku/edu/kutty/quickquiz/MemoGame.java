@@ -43,6 +43,9 @@ class MemoGame
 	{
 		this.score = 0;
 		this.lives = 3;
+		numSelected = 0;
+		timeToWait = 5;
+		attempted = false;
 	}
 	
 	int getLevel()
@@ -118,6 +121,11 @@ class MemoGame
 			}
 			randomFlags();
 		}
+	}
+	
+	boolean checkForGameOver()
+	{
+		return lives < 0;
 	}
 	
 	boolean checkForWin(int index)

@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity
 	
 	public void viewCategories()
 	{
-		if (!checkEndGame()) {
+		if (!checkQuickQuizEndGame()) {
 			QuestionSelectionFragment qs = new QuestionSelectionFragment();
 			if (onTablet) {
 				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, qs, "question_selection_fragment").commit();
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 	
-	private boolean checkEndGame()
+	private boolean checkQuickQuizEndGame()
 	{
 		boolean won = false;
 		boolean lost = false;
@@ -106,8 +105,23 @@ public class MainActivity extends AppCompatActivity
 			bundle.putBoolean("won",true);
 		}
 		if (won || lost) {
+			bundle.putString("game","quick_quiz");
 			gameOverFragment.setArguments(bundle);
 			putFragment(gameOverFragment, "game_over_fragment");
+			return true;
+		}
+		return false;
+	}
+	
+	boolean checkMemoGameEndGame()
+	{
+		if (MemoGame.getInstance().checkForGameOver())
+		{
+			Bundle bundle = new Bundle();
+			GameOverFragment gameOverFragment = new GameOverFragment();
+			bundle.putString("game","memo_game");
+			gameOverFragment.setArguments(bundle);
+			putFragment(gameOverFragment,"game_over_fragment");
 			return true;
 		}
 		return false;
@@ -135,7 +149,7 @@ public class MainActivity extends AppCompatActivity
 			} else if (getSupportFragmentManager().findFragmentByTag("memo_game_fragment") != null ||
 					getSupportFragmentManager().findFragmentByTag("question_selection_fragment") != null)
 			{
-				putFragment(new GameListFragment(), "game_list_fragmnet");
+				putFragment(new GameListFragment(), "game_list_fragment");
 			}
 		}
 	}

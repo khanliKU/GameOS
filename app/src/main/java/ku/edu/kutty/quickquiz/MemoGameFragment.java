@@ -79,6 +79,7 @@ public class MemoGameFragment extends Fragment
 	
 	void updateUI()
 	{
+		parent.checkMemoGameEndGame();
 		if (!MemoGame.getInstance().isAttempted() && MemoGame.getInstance().timeToWait != 0)
 		{
 			rightAnswer.setVisibility(View.VISIBLE);

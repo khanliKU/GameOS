@@ -40,33 +40,50 @@ public class GameOverFragment extends Fragment
 		TextView statusTextView = (TextView) getActivity().findViewById(R.id.status);
 		TextView scoreTextView = (TextView) getActivity().findViewById(R.id.score);
 		TextView nicknameTextView = (TextView) getActivity().findViewById(R.id.nickname);
+		Button restartButton = (Button) getActivity().findViewById(R.id.restartButton);
+		nicknameTextView.setText(User.getInstance().getNickname());
 		
-		boolean won = getArguments().getBoolean("won");
-		if (won)
+		if (getArguments().getString("game").equals("quick_quiz"))
 		{
-			statusTextView.setText("You Won!");
-			statusTextView.setTextColor(Color.GREEN);
+			boolean won = getArguments().getBoolean("won");
+			if (won) {
+				statusTextView.setText("You Won!");
+				statusTextView.setTextColor(Color.GREEN);
+			}
+			else {
+				statusTextView.setText("Game Over!");
+				statusTextView.setTextColor(Color.RED);
+			}
+			scoreTextView.setText("Your score:\n" + QuickQuiz.getInstance().getScore());
+			
+			restartButton.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					//	User.reset();
+					QuickQuiz.reset();
+					MainActivity parent = (MainActivity) getActivity();
+					parent.viewCategories();
+				}
+			});
 		}
 		else
 		{
-			statusTextView.setText("Game Over!");
-			statusTextView.setTextColor(Color.RED);
-		}
-		scoreTextView.setText("Your score:\n" + QuickQuiz.getInstance().getScore());
-		nicknameTextView.setText(User.getInstance().getNickname());
-		
-		Button restartButton = (Button) getActivity().findViewById(R.id.restartButton);
-		restartButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
+			statusTextView.setText("You reached level " + Integer.toString(MemoGame.getInstance().getLevel() + 4));
+			scoreTextView.setText("Your score:\n" + MemoGame.getInstance().getScore());
+			restartButton.setOnClickListener(new View.OnClickListener()
 			{
-			//	User.reset();
-				QuickQuiz.reset();
-				MainActivity parent = (MainActivity) getActivity();
-				parent.viewCategories();
-			}
-		});
+				@Override
+				public void onClick(View v)
+				{
+					//	User.reset();
+					MemoGame.getInstance().reset();
+					MainActivity parent = (MainActivity) getActivity();
+					parent.viewMemoGame();
+				}
+			});
+		}
 	}
 	
 	@Override
