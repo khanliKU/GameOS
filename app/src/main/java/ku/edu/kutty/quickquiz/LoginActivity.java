@@ -1,6 +1,8 @@
 package ku.edu.kutty.quickquiz;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -15,6 +17,13 @@ public class LoginActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+	
+		if ((getResources().getConfiguration().screenLayout &
+				Configuration.SCREENLAYOUT_SIZE_MASK) ==
+				Configuration.SCREENLAYOUT_SIZE_XLARGE)
+		{
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
 
         if (User.getInstance() != null)
         {
