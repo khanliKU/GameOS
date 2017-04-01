@@ -1,6 +1,8 @@
 package ku.edu.kutty.quickquiz;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,15 @@ public class MemoGameFragment extends Fragment
 	ArrayAdapter choiceAdapter;
 	GridView rightAnswer;
 	ArrayAdapter rightAnswerAdapter;
+	Handler myHandler;
+	Runnable delay = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			rightAnswer.setVisibility(View.INVISIBLE);
+		}
+	};
 	//TODO: game logic
 	
 	public MemoGameFragment()
@@ -56,11 +67,23 @@ public class MemoGameFragment extends Fragment
 		lives[3] = (ImageView) parent.findViewById(R.id.life3);
 		choices = (GridView) parent.findViewById(R.id.choices);
 		rightAnswer = (GridView) parent.findViewById(R.id.right_answer);
+		myHandler = new Handler();
+	}
+	
+	@Override
+	public void onStart()
+	{
+		super.onStart();
 		updateUI();
 	}
 	
 	void updateUI()
 	{
+		if (!MemoGame.getInstance().isAttempted())
+		{
+			rightAnswer.setVisibility(View.VISIBLE);
+			myHandler.postDelayed(delay, MemoGame.getInstance().getTimeToWait() * 1000);
+		}
 		nicknameTextView.setText(User.getInstance().getNickname());
 		scoreTextView.setText("Score: " + Integer.toString(MemoGame.getInstance().getScore()));
 		
@@ -83,6 +106,7 @@ public class MemoGameFragment extends Fragment
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				MemoGame.getInstance().select(position);
+				view.setBackgroundColor(Color.YELLOW);
 				updateUI();
 			}
 		});

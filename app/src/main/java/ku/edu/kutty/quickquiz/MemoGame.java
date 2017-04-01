@@ -12,6 +12,9 @@ class MemoGame
 	private int lives = 4;
 	private boolean[] selected;
 	int numSelected = 0;
+	int timeToWait;
+	boolean attempted = false;
+	boolean isViewed = false;
 	
 	private Flag[] currentGameChoices;
 	private Flag[] currentGameAnswers;
@@ -76,6 +79,8 @@ class MemoGame
 		instance.selected = new boolean[instance.currentGameChoices.length];
 		Arrays.fill(instance.selected, Boolean.FALSE);
 		numSelected = 0;
+		timeToWait = 5;
+		attempted = false;
 	}
 	
 	public Flag[] getCurrentGameAnswers()
@@ -90,7 +95,7 @@ class MemoGame
 	
 	void select(int position)
 	{
-		
+		attempted = true;
 		selected[position] = !selected[position];
 		if (selected[position])
 		{
@@ -134,5 +139,25 @@ class MemoGame
 			}
 		}
 		return false;
+	}
+	
+	int getTimeToWait()
+	{
+		return timeToWait;
+	}
+	
+	boolean isAttempted()
+	{
+		return attempted;
+	}
+	
+	static void view()
+	{
+		instance.isViewed = true;
+	}
+	
+	boolean isViewed()
+	{
+		return isViewed;
 	}
 }

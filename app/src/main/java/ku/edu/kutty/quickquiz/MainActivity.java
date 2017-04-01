@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -155,5 +156,6 @@ public class MainActivity extends AppCompatActivity
 	public void viewMemoGame()
 	{
 		putFragment(new MemoGameFragment(),"memo_game_fragment");
+		MemoGame.view();
 	}
 }
