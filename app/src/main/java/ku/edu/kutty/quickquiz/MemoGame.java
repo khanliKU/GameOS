@@ -1,5 +1,6 @@
 package ku.edu.kutty.quickquiz;
 
+import java.util.Arrays;
 import java.util.Random;
 
 class MemoGame
@@ -9,6 +10,11 @@ class MemoGame
 	private Flag[] flags;
 	private int level = 0;
 	private int lives = 4;
+	private boolean[] selected;
+	int numSelected = 0;
+	
+	private Flag[] currentGameChoices;
+	private Flag[] currentGameAnswers;
 	
 	private MemoGame(Flag[] flags)
 	{
@@ -26,6 +32,7 @@ class MemoGame
 		{
 			instance = new MemoGame(flags);
 			instance.reset();
+			instance.randomFlags();
 		}
 	}
 	
@@ -50,12 +57,7 @@ class MemoGame
 		return score;
 	}
 	
-	Flag[] getFlags()
-	{
-		return flags;
-	}
-	
-	Flag[] getRandomFlags()
+	private void randomFlags()
 	{
 		int toRemember = level + 4;
 		Random random = new Random();
@@ -64,6 +66,73 @@ class MemoGame
 		{
 				flags[i] = this.flags[random.nextInt(this.flags.length)];
 		}
-		return flags;
+		currentGameChoices = flags;
+		currentGameAnswers = new Flag[MemoGame.getInstance().getLevel() + 4 ];
+		for (int i = 0 ; i < currentGameAnswers.length ; i++)
+		{
+			currentGameAnswers[i] = currentGameChoices[i];
+		}
+		Utils.shuffleArray(currentGameChoices);
+		instance.selected = new boolean[instance.currentGameChoices.length];
+		Arrays.fill(instance.selected, Boolean.FALSE);
+		numSelected = 0;
+	}
+	
+	public Flag[] getCurrentGameAnswers()
+	{
+		return currentGameAnswers;
+	}
+	
+	public Flag[] getCurrentGameChoices()
+	{
+		return currentGameChoices;
+	}
+	
+	void select(int position)
+	{
+		
+		selected[position] = !selected[position];
+		if (selected[position])
+		{
+			numSelected++;
+			// TODO: check for win
+		}
+		else
+		{
+			numSelected--;
+		}
+		if (numSelected == level + 4)
+		{
+			if (checkForWin(0))
+			{
+				level ++ ;
+				score += 100;
+			}
+			else
+			{
+				lives--;
+			}
+			randomFlags();
+		}
+	}
+	
+	boolean checkForWin(int index)
+	{
+		if (index == getLevel() + 4)
+		{
+			return true;
+		}
+		else
+		{
+			for (int i = 0; i < currentGameChoices.length; i++)
+			{
+				if (currentGameAnswers[index].getName().equals(currentGameChoices[i].getName())
+						&& selected[i])
+				{
+					return checkForWin(index + 1);
+				}
+			}
+		}
+		return false;
 	}
 }
