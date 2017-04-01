@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity
 		
 		getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, new GameListFragment(),"game_list_fragment").commit();
 		
-		// TODO: Fix initial views here, it is set this way to skip login for now
 		if (findViewById(R.id.game_frame) != null)
 		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

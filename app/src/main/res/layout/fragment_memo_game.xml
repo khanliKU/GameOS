@@ -5,7 +5,6 @@
                                              android:layout_height="match_parent"
                                              tools:context=".MemoGameFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/nickname"
         android:layout_width="wrap_content"

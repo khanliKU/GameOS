@@ -100,7 +100,6 @@ class MemoGame
 		if (selected[position])
 		{
 			numSelected++;
-			// TODO: check for win
 		}
 		else
 		{

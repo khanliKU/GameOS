@@ -21,7 +21,6 @@
         android:inputType="textPersonName"
         android:textSize="64sp"/>
 
-    <!-- TODO: change appname -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

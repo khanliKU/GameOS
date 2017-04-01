@@ -1,6 +1,5 @@
 package ku.edu.kutty.quickquiz;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -35,7 +34,6 @@ public class MemoGameFragment extends Fragment
 			MemoGame.getInstance().waited();
 		}
 	};
-	//TODO: game logic
 	
 	public MemoGameFragment()
 	{
@@ -155,3 +153,6 @@ public class MemoGameFragment extends Fragment
 		rightAnswer.setAdapter(rightAnswerAdapter);
 	}
 }
+
+// TODO: game over screen for MemoGame
+// TODO: indicate user that the view is pressed
