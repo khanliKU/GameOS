@@ -15,12 +15,12 @@ class MemoGame
 		this.flags = flags;
 	}
 	
-	MemoGame getInstance()
+	static MemoGame getInstance()
 	{
 		return instance;
 	}
 	
-	void initialize(Flag[] flags)
+	static void initialize(Flag[] flags)
 	{
 		if (instance == null)
 		{

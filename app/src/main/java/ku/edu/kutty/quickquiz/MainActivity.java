@@ -1,25 +1,16 @@
 package ku.edu.kutty.quickquiz;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -45,6 +36,25 @@ public class MainActivity extends AppCompatActivity
 		else
 		{
 			
+		}
+		
+		ArrayList<Flag> flags = new ArrayList<>();
+		String[] fileNames;
+		try
+		{
+			fileNames = getAssets().list("MemoGameFlags");
+			AssetManager assetManager = getAssets();
+			for (String name:fileNames)
+			{
+				InputStream is = assetManager.open("MemoGameFlags/" + name);
+				Bitmap bitmap = BitmapFactory.decodeStream(is);
+				flags.add(new Flag(name,bitmap));
+			}
+			MemoGame.initialize(flags.toArray(new Flag[0]));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 		viewCategories();
 	}
