@@ -155,5 +155,4 @@ public class MemoGameFragment extends Fragment
 	}
 }
 
-// TODO: game over screen for MemoGame
 // TODO: indicate user that the view is pressed
