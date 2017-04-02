@@ -12,6 +12,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+/*
+ * This is the main activity of this app.
+ * After user login, the app segues to this activity and stays here.
+ * It has a different layout for tablet and phone
+ * All fragments are shown in this activity.
+ */
+
 public class MainActivity extends AppCompatActivity
 {
 	
@@ -29,11 +36,7 @@ public class MainActivity extends AppCompatActivity
 		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			onTablet = true;
-			viewCategories();
-		}
-		else
-		{
-			
+			viewQuickQuiz();
 		}
 		
 		ArrayList<Flag> flags = new ArrayList<>();
@@ -56,6 +59,27 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 	
+	// load QuickQuiz
+	public void viewQuickQuiz()
+	{
+		if (!checkQuickQuizEndGame()) {
+			QuestionSelectionFragment qs = new QuestionSelectionFragment();
+			if (onTablet) {
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, qs, "question_selection_fragment").commit();
+			}
+			else {
+				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, qs, "question_selection_fragment").commit();
+			}
+		}
+	}
+	
+	// load Memo Game
+	public void viewMemoGame()
+	{
+		putFragment(new MemoGameFragment(),"memo_game_fragment");
+		MemoGame.view();
+	}
+	
 	public void selectQuestion(int[] index)
 	{
 		if (index[1] <= QuickQuiz.getInstance().getCategories()[index[0]].getMaxAllowedIndex())
@@ -71,19 +95,6 @@ public class MainActivity extends AppCompatActivity
 			else
 			{
 				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, answeringFragment,"answering_fragment").commit();
-			}
-		}
-	}
-	
-	public void viewCategories()
-	{
-		if (!checkQuickQuizEndGame()) {
-			QuestionSelectionFragment qs = new QuestionSelectionFragment();
-			if (onTablet) {
-				getSupportFragmentManager().beginTransaction().replace(R.id.game_frame, qs, "question_selection_fragment").commit();
-			}
-			else {
-				getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, qs, "question_selection_fragment").commit();
 			}
 		}
 	}
@@ -128,7 +139,7 @@ public class MainActivity extends AppCompatActivity
 	}
 	
 	
-	// Navigation
+	// Fragment Navigation
 	@Override
 	public void onBackPressed()
 	{
@@ -136,7 +147,7 @@ public class MainActivity extends AppCompatActivity
 		{
 			if (getSupportFragmentManager().findFragmentByTag("answering_fragment") != null)
 			{
-				viewCategories();
+				viewQuickQuiz();
 			}
 			else if (getSupportFragmentManager().findFragmentByTag("question_selection_fragment") != null)
 			{
@@ -147,7 +158,7 @@ public class MainActivity extends AppCompatActivity
 		{
 			if (getSupportFragmentManager().findFragmentByTag("answering_fragment") != null)
 			{
-				viewCategories();
+				viewQuickQuiz();
 			} else if (getSupportFragmentManager().findFragmentByTag("memo_game_fragment") != null ||
 					getSupportFragmentManager().findFragmentByTag("question_selection_fragment") != null)
 			{
@@ -166,11 +177,5 @@ public class MainActivity extends AppCompatActivity
 		{
 			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, fragment,tag).commit();
 		}
-	}
-	
-	public void viewMemoGame()
-	{
-		putFragment(new MemoGameFragment(),"memo_game_fragment");
-		MemoGame.view();
 	}
 }

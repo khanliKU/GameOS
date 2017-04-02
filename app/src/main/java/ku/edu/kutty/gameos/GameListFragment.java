@@ -33,7 +33,7 @@ public class GameListFragment extends Fragment
 			public void onClick(View v)
 			{
 				MainActivity parent = (MainActivity) getActivity();
-				parent.viewCategories();
+				parent.viewQuickQuiz();
 			}
 		});
 		View memoGame = tableChild("Memo Game");

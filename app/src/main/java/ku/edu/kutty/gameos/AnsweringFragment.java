@@ -93,7 +93,7 @@ public class AnsweringFragment extends Fragment implements View.OnClickListener
 							public void run()
 							{
 								MainActivity parent = (MainActivity) getActivity();
-								parent.viewCategories();
+								parent.viewQuickQuiz();
 							}
 						}, 3000);
 					}
@@ -116,7 +116,7 @@ public class AnsweringFragment extends Fragment implements View.OnClickListener
 				else
 				{
 					MainActivity parent = (MainActivity) getActivity();
-					parent.viewCategories();
+					parent.viewQuickQuiz();
 				}
 			}
 		};

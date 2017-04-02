@@ -7,7 +7,7 @@ class Question
     private String[] choices;
     private boolean read = false;
 	private int attempt = -1;
-	private int timeleft = 30;
+	private int timeLeft = 30;
     private boolean answered = false;
     private boolean attempted = false;
 
@@ -20,14 +20,14 @@ class Question
     }
 
 	int getTimeLeft() {
-		return timeleft;
+		return timeLeft;
 	}
 
 	boolean decrementTimeLeft()
 	{
-		if (timeleft > 0)
+		if (timeLeft > 0)
 		{
-			timeleft--;
+			timeLeft--;
 			return true;
 		}
 		return false;

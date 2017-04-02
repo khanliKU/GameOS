@@ -64,7 +64,7 @@ public class GameOverFragment extends Fragment
 					//	User.reset();
 					QuickQuiz.reset();
 					MainActivity parent = (MainActivity) getActivity();
-					parent.viewCategories();
+					parent.viewQuickQuiz();
 				}
 			});
 		}

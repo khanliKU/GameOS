@@ -57,7 +57,7 @@ public class MemoGameFragment extends Fragment
 		
 		// get flags
 		
-		// UI
+		// get UI elements
 		nicknameTextView = (TextView) parent.findViewById(R.id.nickname);
 		scoreTextView = (TextView) parent.findViewById(R.id.score);
 		lives[0] = (ImageView) parent.findViewById(R.id.life0);
@@ -101,6 +101,7 @@ public class MemoGameFragment extends Fragment
 			lives[i].setImageResource(R.drawable.hearth_full);
 		}
 		
+		// set onclick listener for choices
 		choices.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override

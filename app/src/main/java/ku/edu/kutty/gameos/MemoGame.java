@@ -3,6 +3,12 @@ package ku.edu.kutty.gameos;
 import java.util.Arrays;
 import java.util.Random;
 
+/*
+ * This class governs the Memo Game implementation.
+ * It keeps all the categories and questions.
+ * It implements singleton pattern.
+ */
+
 class MemoGame
 {
 	private static MemoGame instance = null;

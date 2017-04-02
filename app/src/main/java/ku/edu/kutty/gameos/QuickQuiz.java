@@ -13,6 +13,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+/*
+ * This class governs the Quick Quiz implementation.
+ * It keeps all the categories and questions.
+ * It implements singleton pattern.
+ */
+
 class QuickQuiz
 {
 	private static QuickQuiz instance = null;
@@ -34,7 +40,6 @@ class QuickQuiz
 				ArrayList<Category> categories;
 				QuickQuiz dummy = new QuickQuiz(new Category[2]);
 				InputStream is = dummy.getClass().getClassLoader().getResourceAsStream("assets/data.xml");
-// 				InputStream is = activity.getAssets().open("data.xml");
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(is);
