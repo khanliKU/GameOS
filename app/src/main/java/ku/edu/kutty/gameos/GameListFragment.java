@@ -1,17 +1,25 @@
 package ku.edu.kutty.gameos;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class GameListFragment extends Fragment
 {
+	private FirebaseAuth mAuth;
+	private FirebaseAuth.AuthStateListener mAuthListener;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState)
@@ -49,6 +57,53 @@ public class GameListFragment extends Fragment
 		
 		tl.addView(quickQuiz);
 		tl.addView(memoGame);
+		
+		mAuth = FirebaseAuth.getInstance();
+		
+		mAuthListener = new FirebaseAuth.AuthStateListener() {
+			@Override
+			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+				FirebaseUser user = firebaseAuth.getCurrentUser();
+				if (user != null)
+				{
+					// User is signed in
+				}
+				else
+				{
+					// User is signed out
+					MainActivity activity = (MainActivity) getActivity();
+					activity.logout();
+				}
+				// ...
+			}
+		};
+		
+		Button logoutButton = (Button) getActivity().findViewById(R.id.buttonLogout);
+		logoutButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				mAuth.signOut();
+			}
+		});
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		mAuth.addAuthStateListener(mAuthListener);
+	}
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if (mAuthListener != null)
+		{
+			mAuth.removeAuthStateListener(mAuthListener);
+		}
 	}
 	
 	private View tableChild(String gameName)

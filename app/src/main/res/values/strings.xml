@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">QuickQuiz</string>
     <string name="title_activity_game_list">GameListActivity</string>
+    <string name="auth_failed">Authentication failed</string>
 </resources>

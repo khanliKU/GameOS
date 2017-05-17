@@ -1,12 +1,17 @@
 package ku.edu.kutty.gameos;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +35,11 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		
+		
 		getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, new GameListFragment(),"game_list_fragment").commit();
+		
+		
 		
 		if (findViewById(R.id.game_frame) != null)
 		{
@@ -177,5 +186,12 @@ public class MainActivity extends AppCompatActivity
 		{
 			getSupportFragmentManager().beginTransaction().replace(R.id.game_list_frame, fragment,tag).commit();
 		}
+	}
+	
+	public void logout()
+	{
+		Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+		startActivity(intent);
+		finish();
 	}
 }

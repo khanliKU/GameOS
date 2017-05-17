@@ -17,9 +17,9 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:ems="10"
-        android:hint="Please enter a nickname..."
-        android:inputType="textPersonName"
-        android:textSize="64sp"/>
+        android:hint="email"
+        android:inputType="textEmailAddress"
+        android:textSize="36sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,5 +29,38 @@
         android:layout_marginBottom="56dp"
         android:text="Welcome to QuickQuiz!"
         android:textSize="92sp"/>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editTextNickname"
+        android:layout_alignStart="@+id/editTextNickname"
+        android:layout_below="@+id/editTextNickname"
+        android:layout_marginTop="33dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:textSize="36sp"/>
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="Login"
+        android:textSize="24sp"
+        android:layout_below="@+id/editTextPassword"
+        android:layout_alignEnd="@+id/editTextPassword"/>
+
+    <Button
+        android:id="@+id/buttonSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Signup"
+        android:textSize="24sp"
+        android:layout_alignBaseline="@+id/buttonLogin"
+        android:layout_alignBottom="@+id/buttonLogin"
+        android:layout_alignStart="@+id/editTextPassword"/>
 
 </RelativeLayout>

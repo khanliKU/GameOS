@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "375309514950",
+    "firebase_url": "https://gameos-8c4cc.firebaseio.com",
+    "project_id": "gameos-8c4cc",
+    "storage_bucket": "gameos-8c4cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375309514950:android:6ace9acc6c4f24e6",
+        "android_client_info": {
+          "package_name": "ku.edu.kutty.gameos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375309514950-os1vg0aev6mgc6mfmhd1obkr0aadnhev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ku.edu.kutty.gameos",
+            "certificate_hash": "d9ef39e4e8e7857f6e4613394adf98ddf5c69902"
+          }
+        },
+        {
+          "client_id": "375309514950-glqfogdjkft2lk03kl0g667qg0ssi8dl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa4qWcAs1UbNjtqaY8qhstyBV8Uv5pB5o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375309514950-glqfogdjkft2lk03kl0g667qg0ssi8dl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
